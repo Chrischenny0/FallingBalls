@@ -1,9 +1,7 @@
 #include "BMPImage.h"
 
-BMPImage::BMPImage(const string& name, int x, int y) {
+BMPImage::BMPImage(const string& name, int x, int y): pos(x, y) {
     this -> name = name;
-    this -> x = x;
-    this -> y = y;
 
     ifstream input;
     ifstream dataSizes;
@@ -108,13 +106,13 @@ const vector<vector<unsigned char>>& BMPImage::getRGB() const{
 
 void BMPImage::draw(SDLWrapper &g, int newX, int newY){
     vector<unsigned char> temp;
-    this -> x = newX;
-    this -> y = newY;
+    pos.x = newX;
+    pos.y = newY;
 
     for(int i = 0; i < sizeY; i++){
         for(int j = 0; j < sizeX; j++){
             if(!alpha || RGB.at(i).at(j * pixelByte + 3)){
-                g.drawPixel(x + j, y + i,
+                g.drawPixel(pos.x + j, pos.y + i,
                             RGB.at(i).at(j * pixelByte + 2),
                             RGB.at(i).at(j * pixelByte + 1),
                             RGB.at(i).at(j * pixelByte));
@@ -131,7 +129,7 @@ void BMPImage::setBackground(SDLWrapper &g){
 }
 
 void BMPImage::redrawBkG(SDLWrapper &g) {
-    g.redrawBkG(x, y, sizeX, sizeY);
+    g.redrawBkG(pos.x, pos.y, sizeX, sizeY);
 }
 
 

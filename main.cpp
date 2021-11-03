@@ -13,6 +13,10 @@ int main(int argc, char ** argv) {
             test.redrawBkG(g);
             test.draw(g, i, 40);
 
+            if(g.kbhit()){
+                g.getKey();
+            }
+
             g.update();
         }
     }

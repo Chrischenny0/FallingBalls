@@ -12,12 +12,14 @@
 #include <vector>
 #include <cassert>
 #include "SDLWrapper.h"
+#include "Coordinate.h"
 using namespace std;
 
 class BMPImage{
     private:
         //Image Info
-        int x, y, sizeX, sizeY, pixelByte;
+        Coordinate pos;
+        int sizeX, sizeY, pixelByte;
         string name;
         bool alpha;
 

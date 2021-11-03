@@ -1,7 +1,7 @@
 #ifndef CL10_18_2021_BALL_H
 #define CL10_18_2021_BALL_H
 
-#include "point.h"
+#include "../Coordinate.h"
 #include "color.h"
 #include "force.h"
 #include "SDL_Plotter.h"

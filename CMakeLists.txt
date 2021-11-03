@@ -11,6 +11,8 @@ set(SOURCE_FILES main.cpp
         SDL_Plotter.cpp SDL_Plotter.h
         SDLWrapper.cpp  SDLWrapper.h
         BMPImage.cpp    BMPImage.h
+        Coordinate.cpp Coordinate.h
+
         )
 add_executable(FallingBalls ${SOURCE_FILES})
 

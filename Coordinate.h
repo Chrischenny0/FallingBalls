@@ -8,9 +8,9 @@
 #include <cmath>
 using namespace std;
 
-struct point_t{
+struct Coordinate{
     double x, y;
-    point_t(double x = 0, double y = 0);
-    double distance(point_t other)const;
+    Coordinate(double x = 0, double y = 0);
+    double distance(Coordinate other)const;
 };
 #endif //CL10_18_2021_POINT_H
