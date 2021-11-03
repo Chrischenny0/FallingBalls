@@ -1,2 +1,8 @@
 # Project exclude paths
-/cmake-build-default/
+/cmake-build-default/Makefile
+/cmake-build-default/CMakeFiles/
+/cmake-build-default/Testing/
+/cmake-build-default/cmake_install.cmake
+/cmake-build-default/CMakeCache.txt
+/cmake-build-default/FallingBalls.cbp
+/cmake-build-default/FallingBalls.exe
