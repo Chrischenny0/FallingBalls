@@ -10,7 +10,7 @@ using namespace std;
 
 struct Coordinate{
     double x, y;
-    Coordinate(double x = 0, double y = 0);
+    Coordinate(double x, double);
     double distance(Coordinate other)const;
 };
 #endif //CL10_18_2021_POINT_H

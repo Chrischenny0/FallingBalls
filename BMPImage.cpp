@@ -1,6 +1,6 @@
 #include "BMPImage.h"
 
-BMPImage::BMPImage(const string& name, int x, int y): pos(x, y) {
+BMPImage::BMPImage(const string &name, int x, int y, SDLWrapper &g) : pos(x, y), g(g) {
     this -> name = name;
 
     ifstream input;
@@ -64,9 +64,6 @@ BMPImage::BMPImage(const string& name, int x, int y): pos(x, y) {
     this -> sizeX = stoi(headerData.at(6), 0, 2);
     this -> sizeY = stoi(headerData.at(7), 0, 2);
 
-    cout << sizeX << endl;
-    cout << sizeY << endl;
-
     int remain = 0;
     if(sizeX % 4 != 0){
         remain = 4 - sizeX % 4;
@@ -76,6 +73,7 @@ BMPImage::BMPImage(const string& name, int x, int y): pos(x, y) {
     input.seekg(stoi(headerData.at(4), 0, 2));
 
     pixelByte = (stoi(headerData.at(5), 0, 2) == 40)? 3: 4;
+    cout << endl << stoi(headerData.at(5), 0, 2) << endl;
     this -> alpha = (pixelByte == 4);
 
     for(int j = 0; j < sizeY; j++){
@@ -123,12 +121,12 @@ void BMPImage::draw(SDLWrapper &g, int newX, int newY){
     }
 }
 
-void BMPImage::setBackground(SDLWrapper &g){
+void BMPImage::setBackground() {
     g.setBackground(RGB);
     draw(g, 0, 0);
 }
 
-void BMPImage::redrawBkG(SDLWrapper &g) {
+void BMPImage::redrawBkG() {
     g.redrawBkG(pos.x, pos.y, sizeX, sizeY);
 }
 
