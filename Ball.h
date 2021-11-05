@@ -5,17 +5,16 @@
 
 class Ball{
     private:
-
         int radius;
         bool solidColor;
-        unsigned char Color;
 
-        Coordinate center;
+        Coordinate center, previousCord;
         BMPImage mask;
         SDLWrapper &g;
 
     public:
-        Ball(int x, int y, int r, const string& image, SDLWrapper &g);
+        Ball (int x, int y, int r, const string& image, SDLWrapper &g);
         void drawBall();
+        void moveBall(int newX, int newY);
 };
 #endif //FALLINGBALLS_BALL_H

@@ -27,8 +27,8 @@ class SDLWrapper{
         bool kbhit();
         char getKey();
         void update();
-        int  getWidth();
-        int  getHeight();
+        int  getWidth() const;
+        int  getHeight() const;
 
         //SDLWrapper Functions
         void setBackground(const vector<vector<unsigned char>> &background);

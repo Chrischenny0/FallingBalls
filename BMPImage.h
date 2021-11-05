@@ -44,6 +44,4 @@ class BMPImage{
 
 
 };
-
-vector<vector<unsigned char>> vectBMP();
 #endif //CL10_18_2021_BMPTRANSFER_H

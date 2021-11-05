@@ -129,5 +129,3 @@ void BMPImage::setBackground() {
 void BMPImage::redrawBkG() {
     g.redrawBkG(pos.x, pos.y, sizeX, sizeY);
 }
-
-

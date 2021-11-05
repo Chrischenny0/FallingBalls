@@ -4,21 +4,20 @@ using namespace std;
 int main(int argc, char ** argv) {
     SDLWrapper g(700,700,false);
 
-    BMPImage overlay("images/sorbet3.bmp", 0, 0, g);
-    BMPImage test("images/transparent.bmp", 40, 40, g);
+    BMPImage background("images/sorbet3.bmp", 0, 0, g);
+    background.setBackground();
 
-    Ball newBall(40, 40, 200, "images/transparent.bmp", g);
+    Ball ball(100, 100, 70, "images/Ball.bmp", g);
 
-    overlay.setBackground();
     while (!g.getQuit()){
         for(int i = 0; i < 100; i++){
 
-            test.redrawBkG();
-            test.draw(g, i, 40);
-            newBall.drawBall();
+            ball.drawBall();
+            ball.moveBall(100+i, 100);
 
             if(g.kbhit()){
                 g.getKey();
+
             }
 
             g.update();

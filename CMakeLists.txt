@@ -3,17 +3,18 @@ project(FallingBalls)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -lmingw32")
 set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++")
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 include_directories(${PROJECT_SOURCE_DIR}/include)
 link_directories(${PROJECT_SOURCE_DIR}/lib)
 
-set(SOURCE_FILES main.cpp
-        SDL_Plotter.cpp SDL_Plotter.h
-        SDLWrapper.cpp  SDLWrapper.h
-        BMPImage.cpp    BMPImage.h
-        Coordinate.cpp Coordinate.h
-
-        Ball.h Ball.cpp)
+set(SOURCE_FILES      main.cpp
+        SDL_Plotter.h SDL_Plotter.cpp
+        Ball.h        Ball.cpp
+        Coordinate.h  Coordinate.cpp
+        BMPImage.h    BMPImage.cpp
+        SDLWrapper.h  SDLWrapper.cpp
+        )
 add_executable(FallingBalls ${SOURCE_FILES})
 
 target_link_libraries(FallingBalls mingw32 SDL2main SDL2 SDL2_mixer)

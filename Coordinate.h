@@ -9,8 +9,14 @@
 using namespace std;
 
 struct Coordinate{
+    //Variables
     double x, y;
-    Coordinate(double x, double);
-    double distance(Coordinate other)const;
+
+    //Constructor
+    Coordinate(double x, double y);
+
+    //Functions
+    double distance(const Coordinate& other) const;
+    double delta(const Coordinate& other) const;
 };
 #endif //CL10_18_2021_POINT_H

@@ -41,11 +41,11 @@ void SDLWrapper::update() {
     g.update();
 }
 
-int SDLWrapper::getWidth() {
+int SDLWrapper::getWidth() const {
     return height;
 }
 
-int SDLWrapper::getHeight() {
+int SDLWrapper::getHeight() const {
     return width;
 }
 
@@ -64,34 +64,6 @@ void SDLWrapper::redrawBkG(int x, int y, int sizeX, int sizeY) {
         }
     }
 }
-
-/*void SDLWrapper::getslice(int x, int y, int sizeX, int sizeY,
-                      vector<vector<unsigned char>> &vec) {
-
-    vec.clear();
-    vector<unsigned char> newRow;
-
-    for(int i = 0; i < sizeY; i++){
-        for(int j = 0; j < sizeX * 3; j++){
-            newRow.push_back(background.at(0).at(i).at(j));
-        }
-        vec.push_back(newRow);
-        newRow.clear();
-    }
-}
-
-void SDLWrapper::draw(int x, int y, const vector<vector<unsigned char>> &array) {
-    for(int i = 0; i < array.size(); i++){
-        for(int j = 0; j < array.at(i).size()/3; j++){
-            g.plotPixel(j, y - i, array.at(i).at(j * 3 + 2), array.at(i).at
-                    (j*3 + 1), array.at(i).at(j*3));
-        }
-    }
-}
-
-void SDLWrapper::drawBackground() {
-    draw(0,height - 1, background.at(0));
-}*/
 
 
 
