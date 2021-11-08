@@ -2,7 +2,7 @@
 using namespace std;
 
 int main(int argc, char ** argv) {
-    SDLWrapper g(700,700,false);
+    SDLWrapper g(1600,1030,false);
 
     BMPImage background("images/sorbet3.bmp", 0, 0, g);
     background.setBackground();

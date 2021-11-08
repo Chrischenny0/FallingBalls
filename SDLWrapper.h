@@ -16,7 +16,7 @@ class SDLWrapper{
 
     public:
         //Constructor
-        SDLWrapper(int x, int y, bool s);
+        SDLWrapper(int width, int height, bool s);
 
         //SDL_Plotter Functions
         void drawPixel(int x, int y, int r, int g, int b);

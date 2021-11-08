@@ -1,9 +1,9 @@
 #include "SDLWrapper.h"
 
 //Constructor
-SDLWrapper::SDLWrapper(int x, int y, bool s): g(x, y, s){
-    width = x;
-    height = y;
+SDLWrapper::SDLWrapper(int width, int height, bool s): g(height, width, s){
+    this -> width = width;
+    this -> height = height;
 }
 
 //SDL_Plotter Functions
