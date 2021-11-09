@@ -10,18 +10,17 @@ int main(int argc, char ** argv) {
     Ball ball(100, 100, 70, "images/Ball.bmp", g);
 
     while (!g.getQuit()){
-        for(int i = 0; i < 100; i++){
 
-            ball.drawBall();
-            ball.moveBall(100+i, 100);
+        ball.drawBall();
+        ball.moveBall();
+        ball.applyForce(Gravity);
 
-            if(g.kbhit()){
-                g.getKey();
+        if(g.kbhit()){
+            g.getKey();
 
-            }
-
-            g.update();
         }
+
+        g.update();
     }
     return 0;
 }

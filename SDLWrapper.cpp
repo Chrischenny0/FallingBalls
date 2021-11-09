@@ -57,6 +57,7 @@ void SDLWrapper::setBackground(const vector<vector<unsigned char>> &background){
 }
 
 void SDLWrapper::redrawBkG(int x, int y, int sizeX, int sizeY) {
+    y = (y < 0) ? 0 : y;
     for(int i = y; i < sizeY + y; i++){
         for(int j = x; j < sizeX + x; j++){
             drawPixel(j, i, background.at(i).at(j*3+2), background.at(i).at

@@ -2,12 +2,14 @@
 #define FALLINGBALLS_BALL_H
 
 #include "BMPImage.h"
+#include "Force.h"
 
 class Ball{
     private:
-        int radius;
+        int r;
         bool solidColor;
 
+        Force vector;
         Coordinate center, previousCord;
         BMPImage mask;
         SDLWrapper &g;
@@ -15,6 +17,7 @@ class Ball{
     public:
         Ball (int x, int y, int r, const string& image, SDLWrapper &g);
         void drawBall();
-        void moveBall(int newX, int newY);
+        void moveBall();
+        void applyForce(const Force &f);
 };
 #endif //FALLINGBALLS_BALL_H
