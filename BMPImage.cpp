@@ -73,7 +73,6 @@ BMPImage::BMPImage(const string &name, int x, int y, SDLWrapper &g) : pos(x, y),
     input.seekg(stoi(headerData.at(4), 0, 2));
 
     pixelByte = (stoi(headerData.at(5), 0, 2) == 40)? 3: 4;
-    cout << endl << stoi(headerData.at(5), 0, 2) << endl;
     this -> alpha = (pixelByte == 4);
 
     for(int j = 0; j < sizeY; j++){
@@ -92,12 +91,14 @@ BMPImage::BMPImage(const string &name, int x, int y, SDLWrapper &g) : pos(x, y),
     this -> RGB = RGBTemp;
 }
 
-int BMPImage::getsizeX() const{
-    return sizeX;
+Coordinate BMPImage::getPosition() const {
+    return pos;
 }
-int BMPImage::getsizeY() const{
-    return sizeY;
+
+void BMPImage::setPosition(const Coordinate& newPosition) {
+    pos = newPosition;
 }
+
 const vector<vector<unsigned char>>& BMPImage::getRGB() const{
     return RGB;
 }
@@ -109,7 +110,7 @@ void BMPImage::draw(SDLWrapper &g, int newX, int newY){
 
     for(int i = 0; i < sizeY; i++){
         for(int j = 0; j < sizeX; j++){
-            if(!alpha || RGB.at(i).at(j * pixelByte + 3)){
+            if(!alpha || RGB.at(i).at(j * pixelByte + 3) == 255){
                 g.drawPixel(pos.x + j, pos.y + i,
                             RGB.at(i).at(j * pixelByte + 2),
                             RGB.at(i).at(j * pixelByte + 1),
@@ -126,6 +127,17 @@ void BMPImage::setBackground() {
     draw(g, 0, 0);
 }
 
-void BMPImage::redrawBkG() {
-    g.redrawBkG(pos.x, pos.y, sizeX, sizeY);
+void BMPImage::redrawBkG(const Coordinate &position, int sizeXI, int sizeYI) {
+    g.redrawBkG(position.x, position.y, sizeXI, sizeYI);
 }
+
+int BMPImage::getSizeX() const {
+    return sizeX;
+}
+
+int BMPImage::getSizeY() const {
+    return sizeY;
+}
+
+
+

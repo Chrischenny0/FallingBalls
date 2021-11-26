@@ -31,7 +31,7 @@ class SDLWrapper{
         int  getHeight() const;
 
         //SDLWrapper Functions
-        void setBackground(const vector<vector<unsigned char>> &background);
+        void setBackground(const vector<vector<unsigned char>> &newBKG);
         void redrawBkG(int x, int y, int sizeX, int sizeY);
 
         const vector<vector<unsigned char>> & getBackground();

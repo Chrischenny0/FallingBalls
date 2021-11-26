@@ -42,5 +42,5 @@ public:
 };
 
 
-const Force Gravity(0.02,  - PI / 2);
+const Force Gravity(0.02,  - (PI / 2));
 #endif //FALLINGBALLS_FORCE_H

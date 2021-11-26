@@ -32,14 +32,18 @@ class BMPImage{
         //Constructor
         BMPImage(const string &name, int x, int y, SDLWrapper &g);
 
+        //Setters
+        void setPosition(const Coordinate&);
+
         //Getters
-        int getsizeX() const;
-        int getsizeY() const;
+        int getSizeX() const;
+        int getSizeY() const;
+        Coordinate getPosition() const;
         const vector<vector<unsigned char>>& getRGB() const;
 
         //SDL_Plotter Functions
         void draw(SDLWrapper &g, int newX, int newY);
-        void redrawBkG();
+        void redrawBkG(const Coordinate &position, int sizeXI, int sizeYI);
         void setBackground();
 
 

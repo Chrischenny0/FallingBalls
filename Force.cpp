@@ -2,8 +2,8 @@
 
 
 Force::Force(){
-    magnitude = 0;
-    direction = 0;
+    magnitude = 0.8;
+    direction = PI/5;
 }
 Force::Force(double m, double d){
     magnitude = m;
@@ -21,6 +21,8 @@ void Force::apply(const Force& f){
     magnitude = sqrt(pow(ax+bx, 2) + pow(ay+by, 2));
 
     direction = atan((ay+by)/(ax+bx));
+    if((ay+by) < 0 && direction > 0) direction += PI;
+    if((ay+by) > 0 && direction < 0) direction += PI;
 }
 
 Force Force::add(const Force& f) const{
@@ -43,10 +45,10 @@ void Force::redirect(int dir) {
     if(dir == 0){
         direction *= -1;
     }
-    if(dir == -1){
-        direction = PI - direction;
+    if(dir == 1 && magnitude > 0){
+        direction = (PI - abs(direction)) * (direction/ abs(direction));
     }
-    magnitude *= 3;
+    magnitude *= 1.1;
 }
 
 Force Force::operator+ (const Force& f) const{

@@ -15,7 +15,7 @@ class Ball{
         SDLWrapper &g;
 
     public:
-        Ball (int x, int y, int r, const string& image, SDLWrapper &g);
+        Ball (int x, int y, const string& image, SDLWrapper &g);
         void drawBall();
         void moveBall();
         void applyForce(const Force &f);

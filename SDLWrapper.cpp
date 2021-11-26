@@ -8,7 +8,7 @@ SDLWrapper::SDLWrapper(int width, int height, bool s): g(height, width, s){
 
 //SDL_Plotter Functions
 void SDLWrapper::drawPixel(int x, int y, int R, int G, int B){
-    if(x >= 0 && x <= width && y > 0 && y < height){
+    if(x >= 0 && x < width && y > 0 && y <= height){
         g.plotPixel(x, height - y, R, G, B);
     }
 }
@@ -42,30 +42,30 @@ void SDLWrapper::update() {
 }
 
 int SDLWrapper::getWidth() const {
-    return height;
+    return width;
 }
 
 int SDLWrapper::getHeight() const {
-    return width;
+    return height;
 }
 
 
 //SDLWrapper Functions
 
-void SDLWrapper::setBackground(const vector<vector<unsigned char>> &background){
-    this -> background = background;
+void SDLWrapper::setBackground(const vector<vector<unsigned char>> &newBKG){
+    background = newBKG;
 }
 
 void SDLWrapper::redrawBkG(int x, int y, int sizeX, int sizeY) {
-    y = (y < 0) ? 0 : y;
-    for(int i = y; i < sizeY + y; i++){
-        for(int j = x; j < sizeX + x; j++){
-            drawPixel(j, i, background.at(i).at(j*3+2), background.at(i).at
-            (j*3+1), background.at(i).at(j*3));
+
+    for (int i = y; i < sizeY + y; i++) {
+        for (int j = x; j < sizeX + x; j++) {
+            if(i >= 0 && i < height &&
+               j >= 0 && j < (width)){
+                drawPixel(j, i, background[i][j * 4 + 2],
+                                background[i][j * 4 + 1],
+                                background[i][j * 4]);
+            }
         }
     }
 }
-
-
-
-
