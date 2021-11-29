@@ -15,9 +15,11 @@ class Ball{
         SDLWrapper &g;
 
     public:
+        Coordinate getCoords();
         Ball (int x, int y, const string& image, SDLWrapper &g);
         void drawBall();
         void moveBall();
         void applyForce(const Force &f);
+        void collisionCheck(Ball &ballCheck);
 };
 #endif //FALLINGBALLS_BALL_H

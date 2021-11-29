@@ -45,10 +45,13 @@ void Force::redirect(int dir) {
     if(dir == 0){
         direction *= -1;
     }
-    if(dir == 1 && magnitude > 0){
+    if(dir == 1){
         direction = (PI - abs(direction)) * (direction/ abs(direction));
     }
     magnitude *= 1.1;
+    if(magnitude > 10){
+        magnitude = 10;
+    }
 }
 
 Force Force::operator+ (const Force& f) const{

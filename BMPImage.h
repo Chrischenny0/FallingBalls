@@ -27,7 +27,7 @@ class BMPImage{
         SDLWrapper &g;
 
         //Pixel vectors
-        vector<vector<unsigned char>> RGB;
+        vector<vector<vector<unsigned char>>> RGB;
     public:
         //Constructor
         BMPImage(const string &name, int x, int y, SDLWrapper &g);
@@ -39,7 +39,7 @@ class BMPImage{
         int getSizeX() const;
         int getSizeY() const;
         Coordinate getPosition() const;
-        const vector<vector<unsigned char>>& getRGB() const;
+        const vector<vector<vector<unsigned char>>>& getRGB() const;
 
         //SDL_Plotter Functions
         void draw(SDLWrapper &g, int newX, int newY);

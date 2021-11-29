@@ -52,7 +52,8 @@ int SDLWrapper::getHeight() const {
 
 //SDLWrapper Functions
 
-void SDLWrapper::setBackground(const vector<vector<unsigned char>> &newBKG){
+void SDLWrapper::setBackground(const vector<vector<vector<unsigned char>>>
+        &newBKG){
     background = newBKG;
 }
 
@@ -62,9 +63,9 @@ void SDLWrapper::redrawBkG(int x, int y, int sizeX, int sizeY) {
         for (int j = x; j < sizeX + x; j++) {
             if(i >= 0 && i < height &&
                j >= 0 && j < (width)){
-                drawPixel(j, i, background[i][j * 4 + 2],
-                                background[i][j * 4 + 1],
-                                background[i][j * 4]);
+                drawPixel(j, i, background.at(i).at(j).at(2),
+                                background.at(i).at(j).at(1),
+                                background.at(i).at(j).at(0));
             }
         }
     }

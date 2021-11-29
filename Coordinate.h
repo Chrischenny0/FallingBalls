@@ -6,9 +6,10 @@
 #define CL10_18_2021_POINT_H
 
 #include <cmath>
+
 using namespace std;
 
-struct Coordinate{
+struct Coordinate {
     //Variables
     double x, y;
 
@@ -16,7 +17,11 @@ struct Coordinate{
     Coordinate(double x, double y);
 
     //Functions
-    double distance(const Coordinate& other) const;
-    double delta(const Coordinate& other) const;
+    double distance(const Coordinate &other) const;
+
+    double delta(const Coordinate &other) const;
+
+    double slope(const Coordinate &other) const;
 };
+
 #endif //CL10_18_2021_POINT_H
