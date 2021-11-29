@@ -49,8 +49,8 @@ void Force::redirect(int dir) {
         direction = (PI - abs(direction)) * (direction/ abs(direction));
     }
     magnitude *= 1.1;
-    if(magnitude > 10){
-        magnitude = 10;
+    if(magnitude > 5){
+        magnitude = 5;
     }
 }
 
