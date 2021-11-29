@@ -7,8 +7,8 @@ int main(int argc, char ** argv) {
     BMPImage background("images/Background1600.bmp", 0, 0, g);
     background.setBackground();
 
-    Ball ball(300, 390, "images/Ball.bmp", g);
-    Ball ball2(100, 490, "images/Ball.bmp", g);
+    Ball ball(300, 300, "images/Ball.bmp", g);
+    Ball ball2(100, 400, "images/Ball.bmp", g);
     Ball ball3(200, 150, "images/Ball.bmp", g);
 
     vector<Ball> balls;
