@@ -25,6 +25,8 @@ public:
 
     void applyForce(const Force &f);
 
+    void outOfBounds();
+
     void collisionCheck(Ball &ballCheck);
 };
 

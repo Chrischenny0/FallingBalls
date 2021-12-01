@@ -21,21 +21,23 @@ public:
     void apply(const Force &);  //Apply force to current force
     void redirect(int dir);
 
-    void setMagnitude(double m) {
+    void setMag(double m) {
         magnitude = m;
     }
 
-    void setDirection(double d) {
+    void setDir(double d) {
         direction = d;
     }
 
-    double getMagnitude() const {
+    double getMag() const {
         return magnitude;
     }
 
-    double getDirection() const {
+    double getDir() const {
         return direction;
     }
+
+    void normalize();
 };
 
 
