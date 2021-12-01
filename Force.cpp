@@ -40,4 +40,10 @@ void Force::redirect(int dir) {
     }
 }
 
+void Force::normalize() {
+    while(abs(direction) > PI){
+        direction -= (2 * PI) * abs(direction) / direction;
+    }
+}
+
 

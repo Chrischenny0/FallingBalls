@@ -17,16 +17,79 @@ void Ball::drawBall() {
 
 void Ball::moveBall() {
 
-    if (abs(vector.getDirection()) > PI) {
-        double dir = vector.getDirection();
-        vector.setDirection(-(PI - (dir - PI)));
-    }
+    vector.normalize();
 
-    center.y += vector.getMagnitude() * sin(vector.getDirection());
-    center.x += vector.getMagnitude() * cos(vector.getDirection());
+    center.y += vector.getMag() * sin(vector.getDir());
+    center.x += vector.getMag() * cos(vector.getDir());
+
+    outOfBounds();
+
+}
+
+void Ball::applyForce(const Force &f) {
+    vector.apply(f);
+}
+
+void Ball::collisionCheck(Ball &ballCheck) {
+    vector.normalize();
+    ballCheck.vector.normalize();
+
+    if (center.distance(ballCheck.center) < r + ballCheck.r) {
+
+        Force tmp1 = vector, tmp2 = ballCheck.vector;
+        vector.setDir(vector.getDir() + PI);
+        vector.setMag(1);
+        ballCheck.vector.setDir(vector.getDir() + PI);
+        ballCheck.vector.setMag(1);
+        while(center.distance(ballCheck.center) < r + ballCheck.r - 1){
+            moveBall();
+        }
+        vector = tmp1;
+        ballCheck.vector = tmp2;
+
+        if(abs(vector.getDir()) / vector.getDir() != abs(ballCheck.vector.getDir()) /
+                                                     ballCheck.vector.getDir()){
+            double slope = -1 / center.slope(ballCheck.center);
+
+            vector.setDir((PI - (vector.getDir() - atan(slope)) + atan(slope)) - PI);
+
+            ballCheck.vector.setDir((PI - (ballCheck.vector.getDir() - atan(slope)) + atan(slope)) - PI);
+        }
+        else if(vector.getDir() < 0){
+            double slope = -1 / center.slope(ballCheck.center);
+            double difference = center.y - ballCheck.center.y;
+
+            vector.setDir(
+                    (PI - ((vector.getDir() - ((difference < -50) ? PI : 0) - atan(slope)) + atan(slope)) - PI));
+
+            ballCheck.vector.setDir(
+                    (PI - (ballCheck.vector.getDir() - ((difference > 50) ? PI : 0) - atan(slope)) +
+                     atan(slope)) - PI);
+        }
+        else if(vector.getDir() > 0){
+            double slope = -1 / center.slope(ballCheck.center);
+            double difference = center.y - ballCheck.center.y;
+
+            vector.setDir(
+                    (PI - ((vector.getDir() + ((difference > 50) ? PI : 0) - atan(slope)) + atan(slope)) - PI));
+
+            ballCheck.vector.setDir(
+                    (PI - (ballCheck.vector.getDir() + ((difference < -50) ? PI : 0) - atan(slope)) +
+                     atan(slope)) - PI);
+        }
+        //vector.setMagnitude((vector.getMagnitude() + ballCheck.vector.getMagnitude()) / 2);
+        //ballCheck.vector.setMagnitude(vector.getMagnitude());
+    }
+}
+
+Coordinate Ball::getCoords() {
+    return center;
+}
+
+void Ball::outOfBounds() {
 
     while (center.y + r > g.getHeight() || center.y - r < 0 || center.x + r >=
-                          g.getWidth()  || center.x - r < 0) {
+                                                               g.getWidth()  || center.x - r < 0) {
         if (center.y + r > g.getHeight()) {
             center.y -= (((center.y + r) - g.getHeight())) * 2;
             vector.redirect(0);
@@ -42,55 +105,4 @@ void Ball::moveBall() {
             vector.redirect(1);
         }
     }
-
-    drawBall();
-}
-
-void Ball::applyForce(const Force &f) {
-    vector.apply(f);
-}
-
-void Ball::collisionCheck(Ball &ballCheck) {
-    if (abs(vector.getDirection()) > PI) {
-        double dir = vector.getDirection();
-        vector.setDirection((PI - (dir - PI)) * dir/abs(dir));
-    }
-
-    if (center.distance(ballCheck.center) < r + ballCheck.r - 1) {
-        double slope = -1 / center.slope(ballCheck.center);
-
-        vector.setDirection((PI - (vector.getDirection() - atan(slope)) + atan(slope)) - PI);
-
-        ballCheck.vector.setDirection((PI - (ballCheck.vector.getDirection() - atan(slope)) + atan(slope)) - PI );
-
-        /*if(abs(vector.getDirection())/vector.getDirection() != abs(ballCheck.vector.getDirection())/ballCheck.vector.getDirection()){
-
-        }
-        else if(vector.getDirection() < 0){
-            double slope = -1 / center.slope(ballCheck.center);
-            double difference = center.y - ballCheck.center.y;
-
-            vector.setDirection((PI - ((vector.getDirection() - ((difference < -50) ? PI : 0) - atan(slope)) + atan(slope)) - PI));
-
-            ballCheck.vector.setDirection((PI - (ballCheck.vector.getDirection() - ((difference > 50) ? PI : 0) - atan(slope)) + atan(slope)) - PI );
-        }
-        else if(vector.getDirection() > 0){
-            double slope = -1 / center.slope(ballCheck.center);
-            double difference = center.y - ballCheck.center.y;
-
-            vector.setDirection((PI - ((vector.getDirection() + ((difference > 50) ? PI : 0) - atan(slope)) + atan(slope)) - PI));
-
-            ballCheck.vector.setDirection((PI - (ballCheck.vector.getDirection() + ((difference < -50) ? PI : 0) - atan(slope)) + atan(slope)) - PI );
-        }*/
-        //vector.setMagnitude((vector.getMagnitude() + ballCheck.vector.getMagnitude()) / 2);
-        ballCheck.vector.setMagnitude(vector.getMagnitude());
-        while (center.distance(ballCheck.center) < r + ballCheck.r - 3){
-            moveBall();
-            ballCheck.moveBall();
-        }
-    }
-}
-
-Coordinate Ball::getCoords() {
-    return center;
 }
