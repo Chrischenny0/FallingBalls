@@ -1,19 +1,20 @@
 #include "SDLWrapper.h"
+#include "BMPImage.h"
 
 //Constructor
-SDLWrapper::SDLWrapper(int width, int height, bool s): g(height, width, s){
-    this -> width = width;
-    this -> height = height;
+SDLWrapper::SDLWrapper(int width, int height, bool s) : g(height, width, s) {
+    this->width = width;
+    this->height = height;
 }
 
 //SDL_Plotter Functions
-void SDLWrapper::drawPixel(int x, int y, int R, int G, int B){
-    if(x >= 0 && x < width && y > 0 && y <= height){
+void SDLWrapper::drawPixel(int x, int y, int R, int G, int B) {
+    if (x >= 0 && x < width && y > 0 && y <= height) {
         g.plotPixel(x, height - y, R, G, B);
     }
 }
 
-void SDLWrapper::setSound(const string &name){
+void SDLWrapper::setSound(const string &name) {
     g.initSound(name);
 }
 
@@ -53,19 +54,22 @@ int SDLWrapper::getHeight() const {
 //SDLWrapper Functions
 
 void SDLWrapper::setBackground(const vector<vector<vector<unsigned char>>>
-        &newBKG){
+                               &newBKG) {
     background = newBKG;
 }
 
-void SDLWrapper::redrawBkG(int x, int y, int sizeX, int sizeY) {
+void SDLWrapper::redrawBkG(int x, int y,
+                           const vector<vector<vector<unsigned char>>> &mask) {
 
-    for (int i = y; i < sizeY + y; i++) {
-        for (int j = x; j < sizeX + x; j++) {
-            if(i >= 0 && i < height &&
-               j >= 0 && j < (width)){
-                drawPixel(j, i, background.at(i).at(j).at(2),
-                                background.at(i).at(j).at(1),
-                                background.at(i).at(j).at(0));
+    for (int i = y; i < mask.size() + y; i++) {
+        for (int j = x; j < mask.at(i - y).size() + x; j++) {
+            if (mask.at(i - y).at(j - x).at(3) == 255) {
+                if (i >= 0 && i < height &&
+                    j >= 0 && j < (width)) {
+                    drawPixel(j, i, background.at(i).at(j).at(2),
+                              background.at(i).at(j).at(1),
+                              background.at(i).at(j).at(0));
+                }
             }
         }
     }

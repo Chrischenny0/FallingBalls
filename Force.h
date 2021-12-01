@@ -5,42 +5,39 @@
 #include <iostream>
 
 using namespace std;
-const double PI = 3.14159;
+const double PI = 3.14159265359;
 
 using namespace std;
-class Force{
+
+class Force {
 private:
     double magnitude;
     double direction; //radians
 
 
 public:
-    Force(); //default constructor
+    Force();                   //default constructor
     Force(double m, double d); //Passed mag and dir constructor
-    void apply(const Force&); //Apply force to current force
-    Force add(const Force&) const;
+    void apply(const Force &);  //Apply force to current force
     void redirect(int dir);
 
-    void setMagnitude(double m){
+    void setMagnitude(double m) {
         magnitude = m;
     }
-    void setDirection(double d){
+
+    void setDirection(double d) {
         direction = d;
     }
-    double getMagnitude() const{
+
+    double getMagnitude() const {
         return magnitude;
     }
-    double getDirection() const{
-        return direction;
-    }
 
-    Force operator+(const Force&) const;
-    void display(ostream& out){
-        out << "mag = " << magnitude << endl;
-        out << "dir = " << direction << endl;
+    double getDirection() const {
+        return direction;
     }
 };
 
 
-const Force Gravity(0.02,  - (PI / 2));
+const Force Gravity(0.02, -(PI / 2));
 #endif //FALLINGBALLS_FORCE_H

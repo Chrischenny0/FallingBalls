@@ -1,8 +1,9 @@
 #include "Ball.h"
+
 using namespace std;
 
-int main(int argc, char ** argv) {
-    SDLWrapper g(1600,1030,false);
+int main(int argc, char **argv) {
+    SDLWrapper g(1600, 1030, false);
 
     BMPImage background("images/Background1600.bmp", 0, 0, g);
     background.setBackground();
@@ -13,7 +14,7 @@ int main(int argc, char ** argv) {
 
     vector<Ball> balls;
 
-    while (!g.getQuit()){
+    while (!g.getQuit()) {
 
         ball.drawBall();
         ball2.drawBall();
@@ -29,14 +30,9 @@ int main(int argc, char ** argv) {
 
         ball.collisionCheck(ball2);
         ball.collisionCheck(ball3);
-
-        ball2.collisionCheck(ball);
         ball2.collisionCheck(ball3);
 
-        ball3.collisionCheck(ball);
-        ball3.collisionCheck(ball2);
-
-        if(g.kbhit()){
+        if (g.kbhit()) {
             g.getKey();
         }
 

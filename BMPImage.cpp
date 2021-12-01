@@ -98,7 +98,6 @@ const vector<vector<vector<unsigned char>>> &BMPImage::getRGB() const {
 }
 
 void BMPImage::draw(SDLWrapper &g, int newX, int newY) {
-    vector<unsigned char> temp;
     pos.x = newX;
     pos.y = newY;
 
@@ -119,8 +118,9 @@ void BMPImage::setBackground() {
     draw(g, 0, 0);
 }
 
-void BMPImage::redrawBkG(const Coordinate &position, int sizeXI, int sizeYI) {
-    g.redrawBkG(position.x, position.y, sizeXI, sizeYI);
+void BMPImage::redrawBkG(const Coordinate &position,
+                         const vector<vector<vector<unsigned char>>> &mask) {
+    g.redrawBkG(position.x, position.y, mask);
 }
 
 int BMPImage::getSizeX() const {
