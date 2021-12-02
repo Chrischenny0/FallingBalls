@@ -78,11 +78,15 @@ void Ball::stepBack(Ball &ballCheck) {
 
     vector.setDir(vector.getDir() + PI);
     vector.setMag(1);
-    ballCheck.vector.setDir(vector.getDir() + PI);
+    ballCheck.vector.setDir(ballCheck.vector.getDir() + PI);
     ballCheck.vector.setMag(1);
+
+    vector.normalize();
+    ballCheck.vector.normalize();
 
     while(center.distance(ballCheck.center) < r + ballCheck.r){
         moveBall();
+        ballCheck.moveBall();
     }
 
     vector = tmp1;
