@@ -7,7 +7,7 @@
 
 #include "Coordinate.h"
 
-class brick{
+class Brick{
 private:
     Coordinate center;
 
