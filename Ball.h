@@ -28,6 +28,8 @@ public:
     void outOfBounds();
 
     void collisionCheck(Ball &ballCheck);
+
+    void stepBack(Ball &ballCheck);
 };
 
 #endif //FALLINGBALLS_BALL_H

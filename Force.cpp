@@ -35,8 +35,8 @@ void Force::redirect(int dir) {
         direction = (PI - abs(direction)) * (direction / abs(direction));
     }
     magnitude *= 1.1;
-    if (magnitude > 20) {
-        magnitude = 20;
+    if (magnitude > 8) {
+        magnitude = 8;
     }
 }
 
@@ -44,6 +44,15 @@ void Force::normalize() {
     while(abs(direction) > PI){
         direction -= (2 * PI) * abs(direction) / direction;
     }
+}
+
+void Force::collide(Force &f2, double slope, double difference) {
+
+    direction = ((PI - (direction - atan(slope)) + atan(slope)) - PI);
+    f2.direction = ((PI - (f2.direction - atan(slope)) + atan(slope)) - PI);
+
+    magnitude = ((magnitude + f2.magnitude) / 2);
+    f2.magnitude = (magnitude);
 }
 
 

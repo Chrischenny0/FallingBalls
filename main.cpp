@@ -8,7 +8,7 @@ int main(int argc, char **argv) {
     BMPImage background("images/Background1600.bmp", 0, 0, g);
     background.setBackground();
 
-    Ball ball(300, 150, "images/Ball.bmp", g);
+    Ball ball(300, 300, "images/Ball.bmp", g);
     Ball ball2(100, 400, "images/Ball.bmp", g);
     Ball ball3(200, 150, "images/Ball.bmp", g);
 
@@ -30,7 +30,13 @@ int main(int argc, char **argv) {
 
         ball.collisionCheck(ball2);
         ball.collisionCheck(ball3);
+
+        ball2.collisionCheck(ball);
         ball2.collisionCheck(ball3);
+
+        ball3.collisionCheck(ball);
+        ball3.collisionCheck(ball2);
+
 
         if (g.kbhit()) {
             g.getKey();
