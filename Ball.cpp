@@ -39,10 +39,13 @@ void Ball::collisionCheck(Ball &ballCheck) {
         stepBack(ballCheck);
 
         double slope = -1 / center.slope(ballCheck.center);
-        vector.collide(ballCheck.vector, slope, center.y - ballCheck.center.y);
 
-        moveBall();
-        ballCheck.moveBall();
+        vector.collide(ballCheck.vector, slope, center.y - ballCheck.center.y, center.x - ballCheck.center.x);
+
+        while(center.distance(ballCheck.center) < r + ballCheck.r){
+            moveBall();
+            ballCheck.moveBall();
+        }
 
     }
 }

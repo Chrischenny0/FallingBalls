@@ -46,10 +46,42 @@ void Force::normalize() {
     }
 }
 
-void Force::collide(Force &f2, double slope, double difference) {
+void Force::collide(Force &f2, double slope, double differenceY, double differenceX) {
 
-    direction = ((PI - (direction - atan(slope)) + atan(slope)) - PI);
-    f2.direction = ((PI - (f2.direction - atan(slope)) + atan(slope)) - PI);
+    if(abs(direction - f2.direction) > PI/3){
+        direction = ((PI - (direction - atan(slope)) + atan(slope)) - PI);
+        f2.direction = ((PI - (f2.direction - atan(slope)) + atan(slope)) - PI);
+    }
+    else{
+        double forces[] = {direction, f2.direction};
+
+        if(differenceY < 0){
+            swap(forces[0], forces[1]);
+        }
+        if(direction > 0 && f2.direction > 0){
+            forces[0] = (PI - (forces[0] - atan(slope))) + atan(slope);
+            forces[1] = ((PI - (forces[1] - atan(slope)) + atan(slope)) - PI);
+        }
+        else if(direction < 0 && f2.direction < 0){
+            forces[1] = (PI - (forces[1] - atan(slope))) + atan(slope);
+            forces[0] = ((PI - (forces[0] - atan(slope)) + atan(slope)) - PI);
+        }
+        else{
+            if(forces[0] > 0){
+                forces[0] = (PI - (forces[0] - atan(slope))) + atan(slope);
+                forces[1] = ((PI - (forces[1] - atan(slope)) + atan(slope)) - PI);
+            }
+            else{
+                forces[1] = (PI - (forces[1] - atan(slope))) + atan(slope);
+                forces[0] = ((PI - (forces[0] - atan(slope)) + atan(slope)) - PI);
+            }
+        }
+        if(differenceY < 0){
+            swap(forces[0], forces[1]);
+        }
+        direction = forces[0];
+        f2.direction = forces[1];
+    }
 
     magnitude = ((magnitude + f2.magnitude) / 2);
     f2.magnitude = (magnitude);

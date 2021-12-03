@@ -39,7 +39,7 @@ public:
 
     void normalize();
 
-    void collide(Force &f2, double slope, double difference);
+    void collide(Force &f2, double slope, double differenceY, double differenceX);
 };
 
 
