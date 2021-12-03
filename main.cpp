@@ -1,16 +1,20 @@
 #include "Ball.h"
+#include "Brick.h"
 
 using namespace std;
 
 int main(int argc, char **argv) {
-    SDLWrapper g(1600, 950, false);
+    int disWidth = 1000;
+    int disLength = 600;
+    SDLWrapper g(disWidth, disLength, false);
 
     BMPImage background("images/Background1600.bmp", 0, 0, g);
     background.setBackground();
 
     Ball ball(300, 300, "images/Ball.bmp", g);
     Ball ball2(100, 400, "images/Ball.bmp", g);
-    Ball ball3(200, 150, "images/Ball.bmp", g);
+    Ball ball3(800, 450, "images/Ball.bmp", g);
+    Brick brick(200, 500, "images/Brick.bmp", g);
 
     vector<Ball> balls;
 
@@ -19,6 +23,8 @@ int main(int argc, char **argv) {
         ball.drawBall();
         ball2.drawBall();
         ball3.drawBall();
+
+        brick.drawBrick();
 
         ball.applyForce(Gravity);
         ball2.applyForce(Gravity);

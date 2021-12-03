@@ -52,7 +52,6 @@ Coordinate Ball::getCoords() {
 }
 
 void Ball::outOfBounds() {
-
     while (center.y + r > g.getHeight() || center.y - r < 0 || center.x + r >=
                                                                g.getWidth()  || center.x - r < 0) {
         if (center.y + r > g.getHeight()) {
