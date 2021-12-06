@@ -1,17 +1,18 @@
 #include "Ball.h"
 
-Ball::Ball(int x, int y, BMPImage &mask, SDLWrapper &g) : mask(mask), g(g), center(x, y), previousCord(x, y) {
-    r = mask.getSizeX() / 2;
-    mask.setPosition(Coordinate(center.x - r, center.y - r));
+Ball::Ball(int x, int y, BMPImage &image, SDLWrapper &g) : g(g), center(x, y), previousCord(x, y), mask(&image) {
+
+    r = mask -> getSizeX() / 2;
+    mask -> setPosition(Coordinate(center.x - r, center.y - r));
 }
 
 void Ball::drawBall() {
     if (center.delta(previousCord) != 0) {
         Coordinate lowerLeft(previousCord.x - r, previousCord.y - r);
-        mask.redrawBkG(lowerLeft, mask.getRGB());
+        mask -> redrawBkG(lowerLeft, mask -> getRGB());
         previousCord = center;
     }
-    mask.draw(g, center.x - r, center.y - r);
+    mask->draw(center.x - r, center.y - r);
 }
 
 void Ball::moveBall() {
@@ -22,7 +23,6 @@ void Ball::moveBall() {
     center.x += vector.getMag() * cos(vector.getDir());
 
     outOfBounds();
-
 }
 
 void Ball::applyForce(const Force &f) {
@@ -55,7 +55,7 @@ Coordinate Ball::getCoords() {
 
 void Ball::outOfBounds() {
     while (center.y + r > g.getHeight() || center.y - r < 0 || center.x + r >=
-                                                               g.getWidth()  || center.x - r < 0) {
+                                                                          g.getWidth()  || center.x - r < 0) {
         if (center.y + r > g.getHeight()) {
             center.y -= (((center.y + r) - g.getHeight())) * 2;
             vector.redirect(0);

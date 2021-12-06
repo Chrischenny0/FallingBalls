@@ -12,7 +12,7 @@ private:
 
     Force vector;
     Coordinate center, previousCord;
-    BMPImage &mask;
+    BMPImage *mask;
     SDLWrapper &g;
 
 public:
