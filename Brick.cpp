@@ -5,14 +5,10 @@
 #include "Brick.h"
 
 Brick::Brick(int x, int y, BMPImage &mask, SDLWrapper &g) :
-        mask(&mask), g(g), lowerLeft(x, y), upperRight(x, y), center(x, y){
-
-    upperRight.x += mask.getSizeX();
-    upperRight.y += mask.getSizeY();
-
-    center.x += mask.getSizeX() / 2.0;
-    center.y += mask.getSizeY() / 2.0;
-    mask.setPosition(Coordinate(lowerLeft.x, lowerLeft.y));
+        mask(&mask), g(g), center(x, y){
+    w = mask.getSizeX() / 2;
+    l = mask.getSizeX() / 2;
+    mask.setPosition(Coordinate(center.x - w, center.y - l));
 }
 
 int Brick::getLength(){
@@ -20,31 +16,50 @@ int Brick::getLength(){
 }
 
 void Brick::drawBrick(){
-    mask -> draw(lowerLeft.x, lowerLeft.y);
+    mask.draw(center.x - l, center.y - l);
 }
 
 void Brick::moveBrick(){
-    lowerLeft.y += 2;
+    center.y += 2;
 }
 
 void Brick::outOfBounds(){
-    while(lowerLeft.x + l > g.getWidth() || lowerLeft.y + w > g.getHeight()){
-        if(lowerLeft.x + l < 0){
-            lowerLeft.x += abs(0 - lowerLeft.x + l);
+    while(center.x + l > g.getWidth() || center.y + w > g.getHeight()){
+        if(center.x + l < 0){
+            center.x += abs(0 - center.x + l);
         }
-        if(lowerLeft.x + l >= g.getWidth()){
-            lowerLeft.x -= abs(g.getWidth() - lowerLeft.x + l);
+        if(center.x + l >= g.getWidth()){
+            center.x -= abs(g.getWidth() - center.x + l);
         }
     }
 }
 
-bool Brick::collisionBrick(Coordinate &p2) const{
-    return p2.x >= lowerLeft.x && p2.y >= lowerLeft.y && p2.x <= upperRight.x && p2.y <= upperRight.y;
+bool Brick::collisionBrick(Coordinate &ballCenter){
+
+    //If balls radius touches brick
+    /*if(center.distance(ball.getCoords()) < 0){
+
+        stepBack(ball);
+
+        double slope = -1 / center.slope(ball.center);
+
+        vector.collide(ballCheck.vector, slope, center.y - ballCheck.center.y, center.x - ballCheck.center.x);
+
+        while(center.distance(ballCheck.center) < r + ballCheck.r){
+            moveBall();
+            ballCheck.moveBall();
+        }
+    }*/
+
+    if(ballCenter.x > center.x - w / 2 && ballCenter.x < center.x + w / 2){
+
+    }
+
+    return (ballCenter.x > center.x - w / 2 && ballCenter.x < center.x + w / 2) &&
+            (ballCenter.y > center.y - l / 2 && ballCenter.y < center.y + l / 2);
 }
 
 Coordinate& Brick::getCenter(){
-    /*lowerLeft.display();
-    upperRight.display();*/
     return center;
 }
 

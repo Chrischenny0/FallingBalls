@@ -105,7 +105,7 @@ void Ball::collisionCheck(Brick &b){
 
         if(theta > vertBoundsL && theta < PI - vertBoundsL){
             vector.redirect(0);
-            vector.setMag(vector.getMag() )
+            vector.setMag(vector.getMag() );
         }
         else{
             vector.redirect(1);

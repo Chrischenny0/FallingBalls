@@ -29,6 +29,8 @@ public:
 
     bool collisionBrick(Coordinate &) const;
 
+
+
 };
 
 #endif //FALLINGBALLS_BRICK_H
