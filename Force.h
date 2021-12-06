@@ -39,6 +39,8 @@ public:
 
     void normalize();
 
+    double invert() const;
+
     void collide(Force &f2, double slope, double differenceY, double differenceX);
 };
 

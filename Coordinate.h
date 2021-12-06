@@ -22,6 +22,16 @@ struct Coordinate {
     double delta(const Coordinate &other) const;
 
     double slope(const Coordinate &other) const;
+
+    Coordinate adjust(double) const;
+
+    bool operator<(const Coordinate &rhs) const;
+
+    bool operator>(const Coordinate &rhs) const;
+
+    bool operator<=(const Coordinate &rhs) const;
+
+    bool operator>=(const Coordinate &rhs) const;
 };
 
 #endif //CL10_18_2021_POINT_H

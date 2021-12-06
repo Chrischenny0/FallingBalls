@@ -1,6 +1,9 @@
 #include "Ball.h"
 
-Ball::Ball(int x, int y, BMPImage &image, SDLWrapper &g) : g(g), center(x, y), previousCord(x, y), mask(&image) {
+Ball::Ball(int x, int y, BMPImage &image, SDLWrapper &g, Coordinate &lowerBound, Coordinate &upperBound) :
+                                                           center(x, y), previousCord(x, y),
+                                                           mask(&image), g(g),
+                                                           lowerBound(lowerBound), upperBound(upperBound) {
 
     r = mask -> getSizeX() / 2;
     mask -> setPosition(Coordinate(center.x - r, center.y - r));
@@ -15,14 +18,13 @@ void Ball::drawBall() {
     mask->draw(center.x - r, center.y - r);
 }
 
+void Ball::moveBall(double mag, double dir) {
+    center.y += mag * sin(dir);
+    center.x += mag * cos(dir);
+}
+
 void Ball::moveBall() {
-
-    vector.normalize();
-
-    center.y += vector.getMag() * sin(vector.getDir());
-    center.x += vector.getMag() * cos(vector.getDir());
-
-    outOfBounds();
+    moveBall(vector.getMag(), vector.getDir());
 }
 
 void Ball::applyForce(const Force &f) {
@@ -45,7 +47,6 @@ void Ball::collisionCheck(Ball &ballCheck) {
             moveBall();
             ballCheck.moveBall();
         }
-
     }
 }
 
@@ -54,47 +55,34 @@ Coordinate Ball::getCoords() {
 }
 
 void Ball::outOfBounds() {
-    while (center.y + r > g.getHeight() || center.y - r < 0 || center.x + r >=
-                                                                          g.getWidth()  || center.x - r < 0) {
-        if (center.y + r > g.getHeight()) {
-            center.y -= (((center.y + r) - g.getHeight())) * 2;
-            vector.redirect(0);
-        } else if (center.y - r < 0) {
-            center.y += abs(center.y - r);
-            vector.redirect(0);
-        }
-        if (center.x + r >= g.getWidth()) {
-            center.x -= ((center.x + r) - g.getWidth()) * 2;
-            vector.redirect(1);
-        } else if (center.x - r < 0) {
-            center.x += abs(center.x - r);
-            vector.redirect(1);
-        }
+    double dirInvert = vector.invert();
+    int redirectX = -1;
+    int redirectY = -1;
+    if(center.x - r < lowerBound.x || center.x + r > upperBound.x){
+        vector.redirect(1);
+    }
+    if(center.y - r < lowerBound.y || center.y + r > upperBound.y){
+        vector.redirect(0);
+    }
+    while(center.adjust(-r) <= lowerBound || center.adjust(r) >= upperBound){
+        moveBall(1, dirInvert);
     }
 }
 
 void Ball::stepBack(Ball &ballCheck) {
 
 
-    Force tmp1 = vector, tmp2 = ballCheck.vector;
-
-    vector.setDir(vector.getDir() + PI);
-    vector.setMag(1);
-    ballCheck.vector.setDir(ballCheck.vector.getDir() + PI);
-    ballCheck.vector.setMag(1);
-
-
-    vector.normalize();
-    ballCheck.vector.normalize();
+    double tmp1 = vector.invert(), tmp2 = ballCheck.vector.invert();
 
     while(center.distance(ballCheck.center) < r + ballCheck.r){
-        moveBall();
-        ballCheck.moveBall();
+        moveBall(1, tmp1);
+        ballCheck.moveBall(1, tmp2);
     }
-
-    vector = tmp1;
-    ballCheck.vector = tmp2;
 }
+void Ball::stepBack(const Coordinate& p2, double distance){
+
+}
+
 
 void Ball::collisionCheck(Brick &b){
 

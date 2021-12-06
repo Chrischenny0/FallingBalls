@@ -16,7 +16,7 @@ int Brick::getLength(){
 }
 
 void Brick::drawBrick(){
-    mask.draw(g, center.x - l, center.y - l);
+    mask.draw(center.x - l, center.y - l);
 }
 
 void Brick::moveBrick(){

@@ -2,7 +2,7 @@
 #include "BMPImage.h"
 
 //Constructor
-SDLWrapper::SDLWrapper(int width, int height, bool s) : g(height, width, s) {
+SDLWrapper::SDLWrapper(int width, int height, bool s) : g(height, width, s){
     this->width = width;
     this->height = height;
 }

@@ -12,7 +12,6 @@
 #include <vector>
 #include <cassert>
 #include "SDLWrapper.h"
-#include "Coordinate.h"
 
 using namespace std;
 
