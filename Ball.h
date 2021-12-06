@@ -15,14 +15,18 @@ private:
     BMPImage *mask;
     SDLWrapper &g;
 
+    Coordinate &lowerBound, &upperBound;
+
 public:
     Coordinate getCoords();
 
-    Ball(int x, int y, BMPImage &, SDLWrapper &g);
+    Ball(int x, int y, BMPImage &image, SDLWrapper &g, Coordinate &lowerBound, Coordinate &upperBound);
 
     void drawBall();
 
     void moveBall();
+
+    void moveBall(double, double);
 
     void applyForce(const Force &f);
 
@@ -33,6 +37,8 @@ public:
     void collisionCheck(Brick &b2);
 
     void stepBack(Ball &ballCheck);
+
+    void stepBack(const Coordinate&, double);
 };
 
 #endif //FALLINGBALLS_BALL_H

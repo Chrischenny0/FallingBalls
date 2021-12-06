@@ -13,7 +13,8 @@ set(SOURCE_FILES      main.cpp
         Coordinate.h  Coordinate.cpp
         BMPImage.h    BMPImage.cpp
         SDLWrapper.h  SDLWrapper.cpp
-        Force.h Force.cpp)
+        Force.h Force.cpp
+        Brick.h Brick.cpp)
 add_executable(FallingBalls ${SOURCE_FILES})
 
 target_link_libraries(FallingBalls mingw32 SDL2main SDL2 SDL2_mixer)

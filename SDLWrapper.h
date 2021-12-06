@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include "Coordinate.h"
 #include "SDL_Plotter.h"
 
 class SDLWrapper {
@@ -10,7 +11,7 @@ private:
     //SDL_Plotter
     SDL_Plotter g;
 
-    //SDl_Handler Variables
+    //SDlWrapper Variables
     int width, height;
     vector<vector<vector<unsigned char>>> background;
 

@@ -64,7 +64,8 @@ BMPImage::BMPImage(const string &name, int x, int y, SDLWrapper &g) : pos(x, y),
     rawBinary.clear();
     input.seekg(stoi(headerData.at(4), 0, 2));
 
-    pixelByte = (stoi(headerData.at(5), 0, 2) == 40) ? 3 : 4;
+    cout << stoi(headerData.at(9), 0, 2) << endl;
+    pixelByte = (stoi(headerData.at(9), 0, 2) == 24) ? 3 : 4;
     this->alpha = (pixelByte == 4);
 
     for (int i = 0; i < sizeY; i++) {

@@ -87,4 +87,9 @@ void Force::collide(Force &f2, double slope, double differenceY, double differen
     f2.magnitude = (magnitude);
 }
 
+double Force::invert() const {
+
+    return direction + PI;
+}
+
 
