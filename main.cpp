@@ -9,51 +9,59 @@ int main(int argc, char **argv) {
     SDLWrapper g(disWidth, disLength, false);
 
     BMPImage background("images/BackgroundV2.bmp", 0, 0, g);
-    BMPImage ballMask("images/Ball.bmp", 0, 0, g);
-    //BMPImage brickMask("images/Brick.bmp", 0, 0, g);
+    BMPImage ballMask("images/BallV2.bmp", 0, 0, g);
+    BMPImage brickMask("images/Brick.bmp", 0, 0, g);
     background.setBackground();
 
     Ball ball(300, 300, ballMask, g, lowerBound, upperBound);
     Ball ball2(100, 400, ballMask, g, lowerBound, upperBound);
     Ball ball3(600, 450, ballMask, g, lowerBound, upperBound);
-    //Brick brick(rand() % g.getWidth(), 200, brickMask, g);
+    Brick brick(200, 200, brickMask, g);
 
-    vector<Ball> balls;
+    vector<Ball*> balls;
+    balls.push_back(&ball);
+    balls.push_back(&ball2);
+    balls.push_back(&ball3);
 
     while (!g.getQuit()) {
 
-        ball.drawBall();
-        ball2.drawBall();
-        ball3.drawBall();
+        for(int i = 0; i < 3; i++){
 
-        //brick.drawBrick();
+        }
 
-        ball.applyForce(Gravity);
-        ball2.applyForce(Gravity);
-        ball3.applyForce(Gravity);
+        for(int i = 0; i < 3; i++){
+            balls.at(i) -> drawBall();
+        }
 
-        ball.moveBall();
-        ball2.moveBall();
-        ball3.moveBall();
+        for(int i = 0; i < 3; i++){
+            balls.at(i) -> applyForce(Gravity);
+        }
 
-        ball.outOfBounds();
-        ball2.outOfBounds();
-        ball3.outOfBounds();
+        for(int i = 0; i < 3; i++){
+            balls.at(i) -> moveBall();
+            balls.at(i) -> outOfBounds();
+        }
 
-        ball.collisionCheck(ball2);
-        ball.collisionCheck(ball3);
+        brick.drawBrick();
+        for(int i = 0; i < 3; i++){
+            for(int j = 0; j < 3; j++){
+                if(i != j){
+                    balls.at(i) -> collisionCheck(*balls.at(j));
+                }
+            }
+        }
 
-
-        ball2.collisionCheck(ball);
-        ball2.collisionCheck(ball3);
-
-
-        ball3.collisionCheck(ball);
-        ball3.collisionCheck(ball2);
-
-        /*ball.collisionCheck(brick);
+        ball.collisionCheck(brick);
         ball2.collisionCheck(brick);
-        ball3.collisionCheck(brick);*/
+        ball3.collisionCheck(brick);
+
+        for(int i = 0; i < 3; i++){
+            for(int j = 0; j < 3; j++){
+                if(i != j){
+                    balls.at(i) -> collisionCheck(*balls.at(j));
+                }
+            }
+        }
 
 
         if (g.kbhit()) {

@@ -5,7 +5,7 @@ Ball::Ball(int x, int y, BMPImage &image, SDLWrapper &g, Coordinate &lowerBound,
                                                            mask(&image), g(g),
                                                            lowerBound(lowerBound), upperBound(upperBound) {
 
-    r = mask -> getSizeX() / 2;
+    r = (mask -> getSizeX()) / 2;
     mask -> setPosition(Coordinate(center.x - r, center.y - r));
 }
 
@@ -48,6 +48,7 @@ void Ball::collisionCheck(Ball &ballCheck) {
             ballCheck.moveBall();
         }
     }
+    outOfBounds();
 }
 
 Coordinate Ball::getCoords() {
@@ -56,8 +57,6 @@ Coordinate Ball::getCoords() {
 
 void Ball::outOfBounds() {
     double dirInvert = vector.invert();
-    int redirectX = -1;
-    int redirectY = -1;
     if(center.x - r < lowerBound.x || center.x + r > upperBound.x){
         vector.redirect(1);
     }
@@ -67,55 +66,51 @@ void Ball::outOfBounds() {
     while(center.adjust(-r) <= lowerBound || center.adjust(r) >= upperBound){
         moveBall(1, dirInvert);
     }
+    moveBall();
 }
 
 void Ball::stepBack(Ball &ballCheck) {
-
-
-    double tmp1 = vector.invert(), tmp2 = ballCheck.vector.invert();
+    double vectInvert1 = vector.invert(), vectInvert2 = ballCheck.vector.invert();
 
     while(center.distance(ballCheck.center) < r + ballCheck.r){
-        moveBall(1, tmp1);
-        ballCheck.moveBall(1, tmp2);
+        moveBall(1, vectInvert1);
+        ballCheck.moveBall(1, vectInvert2);
     }
 }
-void Ball::stepBack(const Coordinate& p2, double distance){
-
-}
-
 
 void Ball::collisionCheck(Brick &b){
+    double vertBoundsL = tan(31.0/69.0);
 
-    double theta = center.slope(b.getCenter());
-    theta = atan(theta);
+    Coordinate& bCenter = b.getCenter();
+    double theta = atan(center.slope(b.getCenter()));
 
-    Coordinate intersection(center.x + r * sin(theta), center.y + r * cos(theta));
+    if(center.x > bCenter.x){
+        theta += PI;
+    }
+
+    Coordinate intersection(r * cos(theta) + center.x, r * sin(theta) + center.y);
 
     if (b.collisionBrick(intersection)) {
-        Force tmp1 = vector;
-        vector.setDir(vector.getDir() + PI);
-        vector.setMag(1);
+
+        double invertVec = vector.invert();
 
         while(b.collisionBrick(intersection)){
-            moveBall();
-            cout << "step back" << endl;
+            moveBall(1, invertVec);
 
-            theta = center.slope(b.getCenter());
-            theta = atan(theta);
+            theta = atan(center.slope(b.getCenter()));
 
-            intersection.x = center.x + r * sin(theta);
-            intersection.y = center.y + r * cos(theta);
+            intersection.x = center.x + r * cos(theta);
+            intersection.y = center.y + r * sin(theta);
         }
 
-        vector = tmp1;
-
-        if(center.x > b.getCenter().x || center.x < b.getCenter().x){
+        if(theta > vertBoundsL && theta < PI - vertBoundsL){
             vector.redirect(0);
+            vector.setMag(vector.getMag() )
         }
         else{
             vector.redirect(1);
         }
         vector.normalize();
+        moveBall();
     }
-
 }

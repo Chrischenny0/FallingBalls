@@ -35,14 +35,17 @@ void Force::redirect(int dir) {
         direction = (PI - abs(direction)) * (direction / abs(direction));
     }
     magnitude *= 1.1;
-    if (magnitude > 8) {
-        magnitude = 8;
+    if (magnitude > 2) {
+        magnitude = 2;
     }
 }
 
 void Force::normalize() {
     while(abs(direction) > PI){
         direction -= (2 * PI) * abs(direction) / direction;
+    }
+    if(magnitude > 2){
+        magnitude = 2;
     }
 }
 

@@ -9,10 +9,9 @@ class Brick{
 private:
     int l, w;
 
-    Force vector;
-    Coordinate center;
+    Coordinate lowerLeft, upperRight, center;
 
-    BMPImage &mask;
+    BMPImage *mask;
     SDLWrapper &g;
 
 public:
@@ -28,7 +27,7 @@ public:
 
     void outOfBounds();
 
-    bool collisionBrick(Coordinate &);
+    bool collisionBrick(Coordinate &) const;
 
 };
 

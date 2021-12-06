@@ -26,7 +26,7 @@ public:
 
     void moveBall();
 
-    void moveBall(double, double);
+    void moveBall(double mag, double dir);
 
     void applyForce(const Force &f);
 
@@ -37,8 +37,6 @@ public:
     void collisionCheck(Brick &b2);
 
     void stepBack(Ball &ballCheck);
-
-    void stepBack(const Coordinate&, double);
 };
 
 #endif //FALLINGBALLS_BALL_H
