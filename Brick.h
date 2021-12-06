@@ -1,7 +1,3 @@
-/*
- * Increment brick every two balls
- */
-
 #ifndef FALLINGBALLS_BRICK_H
 #define FALLINGBALLS_BRICK_H
 

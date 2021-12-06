@@ -1,7 +1,3 @@
-//
-// Created by Luke Smith on 12/1/21.
-//
-
 #include "Brick.h"
 
 Brick::Brick(int x, int y, BMPImage &mask, SDLWrapper &g) :
@@ -16,7 +12,7 @@ int Brick::getLength(){
 }
 
 void Brick::drawBrick(){
-    mask.draw(g, center.x - l, center.y - l);
+    mask.draw((center.x - l), (center.y - l));
 }
 
 void Brick::moveBrick(){
