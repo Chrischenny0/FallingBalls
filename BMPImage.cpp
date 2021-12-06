@@ -6,7 +6,6 @@ BMPImage::BMPImage(const string &name, int x, int y, SDLWrapper &g) : pos(x, y),
 
     ifstream input;
     ifstream dataSizes;
-    ofstream binary;
 
     unsigned char newByte;
     int dataL;
@@ -97,7 +96,7 @@ const vector<vector<vector<unsigned char>>> &BMPImage::getRGB() const {
     return RGB;
 }
 
-void BMPImage::draw(SDLWrapper &g, int newX, int newY) {
+void BMPImage::draw(int newX, int newY) {
     pos.x = newX;
     pos.y = newY;
 
@@ -115,7 +114,7 @@ void BMPImage::draw(SDLWrapper &g, int newX, int newY) {
 
 void BMPImage::setBackground() {
     g.setBackground(RGB);
-    draw(g, 0, 0);
+    draw(0, 0);
 }
 
 void BMPImage::redrawBkG(const Coordinate &position,
