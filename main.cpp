@@ -1,5 +1,4 @@
 #include "Ball.h"
-#include "Brick.h"
 
 using namespace std;
 
@@ -9,6 +8,8 @@ int main(int argc, char **argv) {
     SDLWrapper g(disWidth, disLength, false);
 
     BMPImage background("images/Background1600.bmp", 0, 0, g);
+    BMPImage ballMask("images/Ball.bmp", 0, 0, g);
+    BMPImage brickMask("images/Brick.bmp", 0, 0, g);
     background.setBackground();
 
     Ball ball(300, 300, ballMask, g);
@@ -38,11 +39,17 @@ int main(int argc, char **argv) {
         ball.collisionCheck(ball2);
         ball.collisionCheck(ball3);
 
+
         ball2.collisionCheck(ball);
         ball2.collisionCheck(ball3);
 
+
         ball3.collisionCheck(ball);
         ball3.collisionCheck(ball2);
+
+        ball.collisionCheck(brick);
+        ball2.collisionCheck(brick);
+        ball3.collisionCheck(brick);
 
 
         if (g.kbhit()) {

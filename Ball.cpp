@@ -1,7 +1,6 @@
 #include "Ball.h"
 
-Ball::Ball(int x, int y, const string &image, SDLWrapper &g) :
-        mask(image, x, y, g), g(g), center(x, y), previousCord(x, y) {
+Ball::Ball(int x, int y, BMPImage &mask, SDLWrapper &g) : mask(mask), g(g), center(x, y), previousCord(x, y) {
     r = mask.getSizeX() / 2;
     mask.setPosition(Coordinate(center.x - r, center.y - r));
 }
@@ -76,12 +75,14 @@ void Ball::outOfBounds() {
 
 void Ball::stepBack(Ball &ballCheck) {
 
+
     Force tmp1 = vector, tmp2 = ballCheck.vector;
 
     vector.setDir(vector.getDir() + PI);
     vector.setMag(1);
     ballCheck.vector.setDir(ballCheck.vector.getDir() + PI);
     ballCheck.vector.setMag(1);
+
 
     vector.normalize();
     ballCheck.vector.normalize();
@@ -93,4 +94,40 @@ void Ball::stepBack(Ball &ballCheck) {
 
     vector = tmp1;
     ballCheck.vector = tmp2;
+}
+
+void Ball::collisionCheck(Brick &b){
+
+    double theta = center.slope(b.getCenter());
+    theta = atan(theta);
+
+    Coordinate intersection(center.x + r * sin(theta), center.y + r * cos(theta));
+
+    if (b.collisionBrick(intersection)) {
+        Force tmp1 = vector;
+        vector.setDir(vector.getDir() + PI);
+        vector.setMag(1);
+
+        while(b.collisionBrick(intersection)){
+            moveBall();
+            cout << "step back" << endl;
+
+            theta = center.slope(b.getCenter());
+            theta = atan(theta);
+
+            intersection.x = center.x + r * sin(theta);
+            intersection.y = center.y + r * cos(theta);
+        }
+
+        vector = tmp1;
+
+        if(center.x > b.getCenter().x || center.x < b.getCenter().x){
+            vector.redirect(0);
+        }
+        else{
+            vector.redirect(1);
+        }
+        vector.normalize();
+    }
+
 }

@@ -16,7 +16,7 @@ private:
     Force vector;
     Coordinate center;
 
-    BMPImage mask;
+    BMPImage &mask;
     SDLWrapper &g;
 
 public:

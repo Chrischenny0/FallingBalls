@@ -3,6 +3,7 @@
 
 #include "BMPImage.h"
 #include "Force.h"
+#include "Brick.h"
 
 class Ball {
 private:
@@ -11,13 +12,13 @@ private:
 
     Force vector;
     Coordinate center, previousCord;
-    BMPImage mask;
+    BMPImage &mask;
     SDLWrapper &g;
 
 public:
     Coordinate getCoords();
 
-    Ball(int x, int y, const string &image, SDLWrapper &g);
+    Ball(int x, int y, BMPImage &, SDLWrapper &g);
 
     void drawBall();
 
@@ -28,6 +29,8 @@ public:
     void outOfBounds();
 
     void collisionCheck(Ball &ballCheck);
+
+    void collisionCheck(Brick &b2);
 
     void stepBack(Ball &ballCheck);
 };

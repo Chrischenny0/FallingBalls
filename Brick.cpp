@@ -4,8 +4,8 @@
 
 #include "Brick.h"
 
-Brick::Brick(int x, int y, const string &image, SDLWrapper &g) :
-        mask(image, x, y, g), g(g), center(x, y), previousCord(x, y){
+Brick::Brick(int x, int y, BMPImage &mask, SDLWrapper &g) :
+        mask(mask), g(g), center(x, y){
     w = mask.getSizeX() / 2;
     l = mask.getSizeX() / 2;
     mask.setPosition(Coordinate(center.x - w, center.y - l));
