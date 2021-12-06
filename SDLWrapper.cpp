@@ -74,3 +74,27 @@ void SDLWrapper::redrawBkG(int x, int y,
         }
     }
 }
+
+void SDLWrapper::Sleep(int ms) {
+
+}
+
+bool SDLWrapper::getMouseClick(int &x, int &y) {
+    return g.getMouseClick(x, y);
+}
+
+bool SDLWrapper::getMouseDown(int &x, int &y) {
+    return g.getMouseDown(x, y);
+}
+
+bool SDLWrapper::getMouseUp(int &x, int &y) {
+    return false;
+}
+
+bool SDLWrapper::getMouseMotion(int &x, int &y) {
+    return false;
+}
+
+void SDLWrapper::getMouseLocation(int &x, int &y) {
+
+}

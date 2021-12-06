@@ -39,6 +39,13 @@ public:
 
     int getHeight() const;
 
+    void Sleep(int ms);
+    bool getMouseClick(int& x, int& y);
+    bool getMouseDown(int& x, int& y);
+    bool getMouseUp(int& x, int& y);
+    bool getMouseMotion(int& x, int& y);
+    void getMouseLocation(int& x, int& y);
+
     //SDLWrapper Functions
     void setBackground(const vector<vector<vector<unsigned char>>> &newBKG);
 
