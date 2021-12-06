@@ -11,14 +11,15 @@ int main(int argc, char **argv) {
     BMPImage background("images/Background1600.bmp", 0, 0, g);
     background.setBackground();
 
-    Ball ball(300, 300, "images/Ball.bmp", g);
-    Ball ball2(100, 400, "images/Ball.bmp", g);
-    Ball ball3(800, 450, "images/Ball.bmp", g);
-    Brick brick(200, 500, "images/Brick.bmp", g);
+    Ball ball(300, 300, ballMask, g);
+    Ball ball2(100, 400, ballMask, g);
+    Ball ball3(800, 450, ballMask, g);
+    Brick brick(rand() % g.getWidth(), 200, brickMask, g);
 
     vector<Ball> balls;
 
     while (!g.getQuit()) {
+        //If drawBall count % 2 is 0 move brick
 
         ball.drawBall();
         ball2.drawBall();

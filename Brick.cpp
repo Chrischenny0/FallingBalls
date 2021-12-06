@@ -11,17 +11,16 @@ Brick::Brick(int x, int y, const string &image, SDLWrapper &g) :
     mask.setPosition(Coordinate(center.x - w, center.y - l));
 }
 
-void Brick::drawBrick() {
-    if (center.delta(previousCord) != 0) {
-        Coordinate lowerLeft(previousCord.x - w, previousCord.y - l);
-        mask.redrawBkG(lowerLeft, mask.getRGB());
-        previousCord = center;
-    }
+int Brick::getLength(){
+    return l;
+}
+
+void Brick::drawBrick(){
     mask.draw(g, center.x - l, center.y - l);
 }
 
 void Brick::moveBrick(){
-
+    center.y += 2;
 }
 
 void Brick::outOfBounds(){
@@ -34,3 +33,33 @@ void Brick::outOfBounds(){
         }
     }
 }
+
+bool Brick::collisionBrick(Coordinate &ballCenter){
+
+    //If balls radius touches brick
+    /*if(center.distance(ball.getCoords()) < 0){
+
+        stepBack(ball);
+
+        double slope = -1 / center.slope(ball.center);
+
+        vector.collide(ballCheck.vector, slope, center.y - ballCheck.center.y, center.x - ballCheck.center.x);
+
+        while(center.distance(ballCheck.center) < r + ballCheck.r){
+            moveBall();
+            ballCheck.moveBall();
+        }
+    }*/
+
+    if(ballCenter.x > center.x - w / 2 && ballCenter.x < center.x + w / 2){
+
+    }
+
+    return (ballCenter.x > center.x - w / 2 && ballCenter.x < center.x + w / 2) &&
+            (ballCenter.y > center.y - l / 2 && ballCenter.y < center.y + l / 2);
+}
+
+Coordinate& Brick::getCenter(){
+    return center;
+}
+

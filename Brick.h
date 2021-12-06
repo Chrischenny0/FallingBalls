@@ -5,21 +5,26 @@
 #ifndef FALLINGBALLS_BRICK_H
 #define FALLINGBALLS_BRICK_H
 
-#include <cmath>
 #include "Coordinate.h"
+#include "Force.h"
 #include "BMPImage.h"
-using namespace std;
 
 class Brick{
 private:
     int l, w;
-    Coordinate center, previousCord;
+
+    Force vector;
+    Coordinate center;
 
     BMPImage mask;
     SDLWrapper &g;
 
 public:
-    Brick(int x, int y, const string &image, SDLWrapper &g);
+    Brick(int x, int y, BMPImage&, SDLWrapper &g);
+
+    int getLength();
+
+    Coordinate& getCenter();
 
     void drawBrick();
 
@@ -27,6 +32,7 @@ public:
 
     void outOfBounds();
 
+    bool collisionBrick(Coordinate &);
 
 };
 
