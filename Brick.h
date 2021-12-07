@@ -17,10 +17,6 @@ private:
 public:
     Brick(int x, int y, BMPImage&, SDLWrapper &g);
 
-    //~Brick();
-
-    //Brick& operator=();
-
     Coordinate& getCenter();
 
     const Coordinate &getLowerLeft() const;
@@ -28,6 +24,8 @@ public:
     const Coordinate &getUpperRight() const;
 
     void drawBrick();
+
+    void redrawBackground() const;
 
     void moveBrick();
 

@@ -14,70 +14,62 @@ int main(int argc, char **argv) {
     BMPImage brickMask("images/Brick.bmp", 0, 0, g);
     background.setBackground();
 
-    Ball ball(300, 300, ballMask, g, lowerBound, upperBound);
-    Ball ball2(100, 400, ballMask, g, lowerBound, upperBound);
-    Ball ball3(600, 450, ballMask, g, lowerBound, upperBound);
-    Brick brick(150, 200, brickMask, g);
-    Brick brick2(300, 200, brickMask, g);
-    Brick brick3(450, 200, brickMask, g);
-    Brick brick4(600, 200, brickMask, g);
-
     vector<Brick*> bricks;
-    bricks.push_back(&brick);
-    bricks.push_back(&brick2);
-    bricks.push_back(&brick3);
-    bricks.push_back(&brick4);
-
-
+    bricks.push_back(new Brick(150, 200, brickMask, g));
+    bricks.push_back(new Brick(300, 200, brickMask, g));
+    bricks.push_back(new Brick(450, 200, brickMask, g));
+    bricks.push_back(new Brick(600, 200, brickMask, g));
 
     vector<Ball*> balls;
-    balls.push_back(&ball);
-    balls.push_back(&ball2);
-    balls.push_back(&ball3);
+    balls.push_back(new Ball(300, 300, ballMask, g, lowerBound, upperBound));
+    balls.push_back(new Ball(100, 400, ballMask, g, lowerBound, upperBound));
+    balls.push_back(new Ball(600, 450, ballMask, g, lowerBound, upperBound));
 
     while (!g.getQuit()) {
 
-        for(int i = 0; i < 3; i++){
-
-        }
-
-        for(int i = 0; i < 3; i++){
+        for(int i = 0; i < balls.size(); i++){
             balls.at(i) -> drawBall();
+        }
+        for(int i = 0; i < bricks.size(); i++){
             bricks.at(i) -> drawBrick();
         }
-        bricks.at(3) -> drawBrick();
 
-        for(int i = 0; i < 3; i++){
+        for(int i = 0; i < balls.size(); i++){
             balls.at(i) -> applyForce(Gravity);
         }
 
-        for(int i = 0; i < 3; i++){
+        for(int i = 0; i < balls.size(); i++){
             balls.at(i) -> moveBall();
             balls.at(i) -> outOfBounds();
         }
 
-        for(int i = 0; i < 3; i++){
-            for(int j = 0; j < 3; j++){
+        for(int i = 0; i < balls.size(); i++){
+            for(int j = 0; j < balls.size(); j++){
                 if(i != j){
                     balls.at(i) -> collisionCheck(*balls.at(j));
                 }
             }
         }
 
-        for(int i = 0; i < 3; i++){
-            for(int j = 0; j < 3; j++){
+        for(int i = 0; i < balls.size(); i++){
+            for(int j = 0; j < balls.size(); j++){
                 if(i != j){
                     balls.at(i) -> collisionCheck(*balls.at(j));
                 }
             }
         }
-        ball.collisionCheck(brick);
-        ball2.collisionCheck(brick);
-        ball3.collisionCheck(brick);
 
-        for(int i = 0; i < 3; i++){
-            for(int j = 0; j < 4; j++){
+        for(int i = 0; i < balls.size(); i++){
+            for(int j = 0; j < bricks.size(); j++){
                 balls.at(i) -> collisionCheck(*bricks.at(j));
+            }
+        }
+
+        for(int i = 0; i < bricks.size(); i++){
+            if(bricks.at(i) -> getColCount() < 0){
+                bricks.at(i) -> redrawBackground();
+                delete bricks.at(i);
+                bricks.erase(bricks.begin() + i);
             }
         }
 

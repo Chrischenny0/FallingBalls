@@ -45,10 +45,9 @@ public:
     const vector<vector<vector<unsigned char>>> &getRGB() const;
 
     //SDL_Plotter Functions
-    void draw(int newX, int newY);
+    void draw(const Coordinate &corner);
 
-    void redrawBkG(const Coordinate &position,
-                   const vector<vector<vector<unsigned char>>> &mask);
+    void redrawBkG(const Coordinate &position);
 
     void setBackground();
 

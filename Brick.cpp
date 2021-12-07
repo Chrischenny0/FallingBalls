@@ -21,7 +21,7 @@ Brick::~Brick(){
  */
 
 void Brick::drawBrick(){
-    mask -> draw(lowerLeft.x, lowerLeft.y);
+    mask -> draw(lowerLeft);
 }
 
 void Brick::moveBrick(){
@@ -50,5 +50,9 @@ const Coordinate &Brick::getLowerLeft() const {
 
 const Coordinate &Brick::getUpperRight() const {
     return upperRight;
+}
+
+void Brick::redrawBackground() const {
+    mask -> redrawBkG(lowerLeft);
 }
 

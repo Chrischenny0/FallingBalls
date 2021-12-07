@@ -12,10 +12,10 @@ Ball::Ball(int x, int y, BMPImage &image, SDLWrapper &g, Coordinate &lowerBound,
 void Ball::drawBall() {
     if (center.delta(previousCord) != 0) {
         Coordinate lowerLeft(previousCord.x - r, previousCord.y - r);
-        mask -> redrawBkG(lowerLeft, mask -> getRGB());
+        mask->redrawBkG(lowerLeft);
         previousCord = center;
     }
-    mask->draw(center.x - r, center.y - r);
+    mask -> draw(Coordinate(center.x - r, center.y - r));
 }
 
 void Ball::moveBall(double mag, double dir) {

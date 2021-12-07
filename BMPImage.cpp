@@ -97,14 +97,12 @@ const vector<vector<vector<unsigned char>>> &BMPImage::getRGB() const {
     return RGB;
 }
 
-void BMPImage::draw(int newX, int newY) {
-    pos.x = newX;
-    pos.y = newY;
+void BMPImage::draw(const Coordinate &corner) {
 
     for (int i = 0; i < sizeY; i++) {
         for (int j = 0; j < sizeX; j++) {
             if (!alpha || RGB.at(i).at(j).at(3) == 255) {
-                g.drawPixel(pos.x + j, pos.y + i,
+                g.drawPixel(corner.x + j, corner.y + i,
                             RGB.at(i).at(j).at(2),
                             RGB.at(i).at(j).at(1),
                             RGB.at(i).at(j).at(0));
@@ -115,12 +113,11 @@ void BMPImage::draw(int newX, int newY) {
 
 void BMPImage::setBackground() {
     g.setBackground(RGB);
-    draw(0, 0);
+    draw(Coordinate(0,0));
 }
 
-void BMPImage::redrawBkG(const Coordinate &position,
-                         const vector<vector<vector<unsigned char>>> &mask) {
-    g.redrawBkG(position.x, position.y, mask);
+void BMPImage::redrawBkG(const Coordinate &position) {
+    g.redrawBkG(position.x, position.y, RGB);
 }
 
 int BMPImage::getSizeX() const {
