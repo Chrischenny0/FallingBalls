@@ -43,8 +43,14 @@ bool Brick::collisionBrick(Coordinate &p2) const{
 }
 
 Coordinate& Brick::getCenter(){
-    /*lowerLeft.display();
-    upperRight.display();*/
     return center;
+}
+
+const Coordinate &Brick::getLowerLeft() const {
+    return lowerLeft;
+}
+
+const Coordinate &Brick::getUpperRight() const {
+    return upperRight;
 }
 

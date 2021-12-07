@@ -21,6 +21,10 @@ public:
 
     Coordinate& getCenter();
 
+    const Coordinate &getLowerLeft() const;
+
+    const Coordinate &getUpperRight() const;
+
     void drawBrick();
 
     void moveBrick();
