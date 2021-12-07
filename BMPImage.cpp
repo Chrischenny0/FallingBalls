@@ -1,7 +1,7 @@
 #include "BMPImage.h"
 
-BMPImage::BMPImage(const string &name, int x, int y, SDLWrapper &g) : pos(x, y),
-                                                                      g(g) {
+BMPImage::BMPImage(const string &name, int x, int y, SDLWrapper &g, bool ball) : pos(x, y),
+                                                                                 g(g), ball(ball) {
     this->name = name;
 
     ifstream input;
@@ -97,15 +97,17 @@ const vector<vector<vector<unsigned char>>> &BMPImage::getRGB() const {
     return RGB;
 }
 
-void BMPImage::draw(const Coordinate &corner) {
+void BMPImage::draw(const Coordinate &corner, const Coordinate lowerBound) {
 
     for (int i = 0; i < sizeY; i++) {
         for (int j = 0; j < sizeX; j++) {
-            if (!alpha || RGB.at(i).at(j).at(3) == 255) {
-                g.drawPixel(corner.x + j, corner.y + i,
-                            RGB.at(i).at(j).at(2),
-                            RGB.at(i).at(j).at(1),
-                            RGB.at(i).at(j).at(0));
+            if(!ball || corner.y + i > lowerBound.y){
+                if (!alpha || RGB.at(i).at(j).at(3) == 255) {
+                    g.drawPixel(corner.x + j, corner.y + i,
+                                RGB.at(i).at(j).at(2),
+                                RGB.at(i).at(j).at(1),
+                                RGB.at(i).at(j).at(0));
+                }
             }
         }
     }
@@ -113,7 +115,7 @@ void BMPImage::draw(const Coordinate &corner) {
 
 void BMPImage::setBackground() {
     g.setBackground(RGB);
-    draw(Coordinate(0,0));
+    draw(Coordinate(0, 0), Coordinate(0, 0));
 }
 
 void BMPImage::redrawBkG(const Coordinate &position) {

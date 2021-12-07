@@ -4,7 +4,6 @@ Ball::Ball(int x, int y, BMPImage &image, SDLWrapper &g, Coordinate &lowerBound,
                                                            center(x, y), previousCord(x, y),
                                                            mask(&image), g(g),
                                                            lowerBound(lowerBound), upperBound(upperBound) {
-
     r = (mask -> getSizeX()) / 2;
     mask -> setPosition(Coordinate(center.x - r, center.y - r));
 }
@@ -15,7 +14,7 @@ void Ball::drawBall() {
         mask->redrawBkG(lowerLeft);
         previousCord = center;
     }
-    mask -> draw(Coordinate(center.x - r, center.y - r));
+    mask->draw(Coordinate(center.x - r, center.y - r), lowerBound);
 }
 
 void Ball::moveBall(double mag, double dir) {
@@ -59,11 +58,24 @@ void Ball::outOfBounds() {
     double dirInvert = vector.invert();
     if(center.x - r < lowerBound.x || center.x + r > upperBound.x){
         vector.redirect(1);
+        /*if(center.x - r < lowerBound.x){
+            center.x += lowerBound.x - (center.x - r);
+        }
+        else{
+            center.x -= (center.x + r) - upperBound.x;
+        }*/
     }
-    if(center.y - r < lowerBound.y || center.y + r > upperBound.y){
+    if(center.y + r > upperBound.y){
         vector.redirect(0);
+        /*if(center.y - r < lowerBound.y){
+            center.y += lowerBound.y - (center.y - r);
+        }
+        else{
+            center.y -= (center.y + r) - upperBound.y;
+        }*/
     }
-    while(center.adjust(-r) <= lowerBound || center.adjust(r) >= upperBound){
+
+    while(center.x < lowerBound.x || center.adjust(r) >= upperBound){
         moveBall(1, dirInvert);
     }
     moveBall();

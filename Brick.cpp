@@ -21,7 +21,7 @@ Brick::~Brick(){
  */
 
 void Brick::drawBrick(){
-    mask -> draw(lowerLeft);
+    mask->draw(lowerLeft, Coordinate(0, 0));
 }
 
 void Brick::moveBrick(){

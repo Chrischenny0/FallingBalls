@@ -21,7 +21,7 @@ private:
     Coordinate pos;
     int sizeX, sizeY, pixelByte;
     string name;
-    bool alpha;
+    bool alpha, ball = false;
 
     //
     SDLWrapper &g;
@@ -30,7 +30,7 @@ private:
     vector<vector<vector<unsigned char>>> RGB;
 public:
     //Constructor
-    BMPImage(const string &name, int x, int y, SDLWrapper &g);
+    BMPImage(const string &name, int x, int y, SDLWrapper &g, bool ball = false);
 
     //Setters
     void setPosition(const Coordinate &);
@@ -45,7 +45,7 @@ public:
     const vector<vector<vector<unsigned char>>> &getRGB() const;
 
     //SDL_Plotter Functions
-    void draw(const Coordinate &corner);
+    void draw(const Coordinate &corner, const Coordinate lowerBound = Coordinate(0,0));
 
     void redrawBkG(const Coordinate &position);
 

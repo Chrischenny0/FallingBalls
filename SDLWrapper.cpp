@@ -58,17 +58,13 @@ void SDLWrapper::setBackground(const vector<vector<vector<unsigned char>>>
     background = newBKG;
 }
 
-void SDLWrapper::redrawBkG(int x, int y,
-                           const vector<vector<vector<unsigned char>>> &mask) {
+void SDLWrapper::redrawBkG(int x, int y, const vector<vector<vector<unsigned char>>> &mask) {
 
-    for (int i = y; i < mask.size() + y; i++) {
-        for (int j = x; j < mask.at(i - y).size() + x; j++) {
-            if (mask.at(i - y).at(j - x).at(3) == 255) {
-                if (i >= 0 && i < height &&
-                    j >= 0 && j < (width)) {
-                    drawPixel(j, i, background.at(i).at(j).at(2),
-                              background.at(i).at(j).at(1),
-                              background.at(i).at(j).at(0));
+    for(int i = 0; i < mask.size(); i++){
+        for(int j = 0; j < mask.at(i).size(); j++){
+            if (mask.at(i).at(j).at(3) == 255){
+                if (i + y >= 0 && i + y < height && j + x >= 0 && j + x < width) {
+                    drawPixel(j + x, i + y, background.at(i + y).at(j + x).at(2),background.at(i + y).at(j + x).at(1),background.at(i + y).at(j + x).at(0));
                 }
             }
         }

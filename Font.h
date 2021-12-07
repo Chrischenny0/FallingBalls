@@ -5,8 +5,8 @@
 
 class Font {
 private:
-    vector<BMPImage*> characters;
-    vector<BMPImage*> numbers;
+    vector<BMPImage*>* characters;
+    vector<BMPImage*>* numbers;
 
     vector<int> message;
 
@@ -15,7 +15,8 @@ private:
     string messageStr;
 
 public:
-    Font(SDLWrapper &, Coordinate lowerLeft);
+    Font(SDLWrapper &, Coordinate lowerLeft, vector<BMPImage *> &characters,
+         vector<BMPImage *> &numbers);
 
     void setLocation(Coordinate);
 

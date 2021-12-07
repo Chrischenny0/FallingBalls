@@ -6,14 +6,32 @@ using namespace std;
 int main(int argc, char **argv) {
     int disWidth = 1200;
     int disLength = 950;
+    vector<BMPImage*> characters;
+    vector<BMPImage*> numbers;
     Coordinate lowerBound(15, 25), upperBound(765, 925); //750 x 900
     SDLWrapper g(disWidth, disLength, false);
 
-    BMPImage background("images/BackgroundV3.bmp", 0, 0, g);
-    BMPImage ballMask("images/BallV2.bmp", 0, 0, g);
-    BMPImage brickMask("images/Brick.bmp", 0, 0, g);
+    BMPImage background("images/BackgroundV3.bmp", 0, 0, g, false);
+    BMPImage ballMask("images/BallV2.bmp", 0, 0, g, true);
+    BMPImage brickMask("images/Brick.bmp", 0, 0, g, false);
 
-    Font highScore(g, Coordinate(900, 200));
+    string fileName;
+
+    for (int i = 0; i < 26; i++) {
+        fileName = "Fonts/";
+        fileName += char('A' + i);
+        fileName += ".bmp";
+        characters.emplace_back(new BMPImage(fileName, 0, 0, g, false));
+    }
+
+    for (int i = 0; i < 10; i++) {
+        fileName = "Fonts/";
+        fileName += char('0' + i);
+        fileName += ".bmp";
+        numbers.emplace_back(new BMPImage(fileName, 0, 0, g, false));
+    }
+
+    Font highScore(g, Coordinate(900, 200), characters, numbers);
     highScore.setMessage("hello");
     background.setBackground();
 
