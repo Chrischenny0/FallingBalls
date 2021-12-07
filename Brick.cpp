@@ -14,6 +14,11 @@ Brick::Brick(int x, int y, BMPImage &mask, SDLWrapper &g) :
     center.y += mask.getSizeY() / 2.0;
     mask.setPosition(Coordinate(lowerLeft.x, lowerLeft.y));
 }
+/*
+Brick::~Brick(){
+    delete brick;
+}
+ */
 
 void Brick::drawBrick(){
     mask -> draw(lowerLeft.x, lowerLeft.y);
@@ -21,6 +26,10 @@ void Brick::drawBrick(){
 
 void Brick::moveBrick(){
     lowerLeft.y += 2;
+}
+
+void Brick::decrementColCount(){
+    colCount--;
 }
 
 int Brick::getColCount(){

@@ -18,11 +18,11 @@ int main(int argc, char **argv) {
     Ball ball(300, 300, ballMask, g, lowerBound, upperBound);
     Ball ball2(100, 400, ballMask, g, lowerBound, upperBound);
     Ball ball3(600, 450, ballMask, g, lowerBound, upperBound);
-    //Brick brick(space1.x, space1.y, brickMask, g);
-    //Brick brick2(space2.x, space2.y, brickMask, g);
-    //Brick brick3(space3.x, space3.y, brickMask, g);
-    //Brick brick4(space4.x, space4.y, brickMask, g);
-    //Brick brick5(space5.x, space5.y, brickMask, g);
+    Brick* brick1 = new Brick(space1.x, space1.y, brickMask, g);
+    Brick* brick2 = new Brick(space2.x, space2.y, brickMask, g);
+    Brick* brick3 = new Brick(space3.x, space3.y, brickMask, g);
+    Brick* brick4 = new Brick(space4.x, space4.y, brickMask, g);
+    Brick* brick5 = new Brick(space5.x, space5.y, brickMask, g);
 
     vector<Brick> bricks;
     bricks.push_back(Brick(space1.x, space1.y, brickMask, g));
@@ -76,15 +76,17 @@ int main(int argc, char **argv) {
             }
         }
 
+        //Collision Check For Brick
         for(int i = 0; i < balls.size(); i++){
             for(int j = 0; j < bricks.size(); j++){
                 balls.at(i) -> collisionCheck(bricks.at(j));
             }
         }
         for(int i = 0; i < bricks.size(); i++){
-            if(bricks[i].getColCount() < 1){
-                bricks.erase(bricks.begin() + i);
-                cout << "broke" << endl;
+            if(bricks[i].getColCount() < 0){
+                //bricks[i] = bricks.back();
+                //cout << "Brick: " << i << " Broke" << endl;
+                //cout << bricks[i].getColCount() << endl;
             }
         }
 

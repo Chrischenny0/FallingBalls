@@ -92,6 +92,9 @@ void Ball::collisionCheck(Brick &b){
 
     if (b.collisionBrick(intersection)) {
 
+        //Added Decrement of Col Count
+        b.decrementColCount();
+
         double invertVec = vector.invert();
 
         while(b.collisionBrick(intersection)){

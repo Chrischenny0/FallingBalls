@@ -17,6 +17,10 @@ private:
 public:
     Brick(int x, int y, BMPImage&, SDLWrapper &g);
 
+    //~Brick();
+
+    //Brick& operator=();
+
     Coordinate& getCenter();
 
     const Coordinate &getLowerLeft() const;
@@ -26,6 +30,8 @@ public:
     void drawBrick();
 
     void moveBrick();
+
+    void decrementColCount();
 
     int getColCount();
 
