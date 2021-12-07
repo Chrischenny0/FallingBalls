@@ -18,19 +18,18 @@ int main(int argc, char **argv) {
     Ball ball(300, 300, ballMask, g, lowerBound, upperBound);
     Ball ball2(100, 400, ballMask, g, lowerBound, upperBound);
     Ball ball3(600, 450, ballMask, g, lowerBound, upperBound);
-    Brick brick(space1.x, space1.y, brickMask, g);
-    Brick brick2(space2.x, space2.y, brickMask, g);
-    Brick brick3(space3.x, space3.y, brickMask, g);
-    Brick brick4(space4.x, space4.y, brickMask, g);
-    Brick brick5(space5.x, space5.y, brickMask, g);
+    //Brick brick(space1.x, space1.y, brickMask, g);
+    //Brick brick2(space2.x, space2.y, brickMask, g);
+    //Brick brick3(space3.x, space3.y, brickMask, g);
+    //Brick brick4(space4.x, space4.y, brickMask, g);
+    //Brick brick5(space5.x, space5.y, brickMask, g);
 
-    vector<Brick*> bricks;
-
-    bricks.push_back(&brick);
-    bricks.push_back(&brick2);
-    bricks.push_back(&brick3);
-    bricks.push_back(&brick4);
-    bricks.push_back(&brick5);
+    vector<Brick> bricks;
+    bricks.push_back(Brick(space1.x, space1.y, brickMask, g));
+    bricks.push_back(Brick(space2.x, space2.y, brickMask, g));
+    bricks.push_back(Brick(space3.x, space3.y, brickMask, g));
+    bricks.push_back(Brick(space4.x, space4.y, brickMask, g));
+    bricks.push_back(Brick(space5.x, space5.y, brickMask, g));
 
 
     vector<Ball*> balls;
@@ -40,14 +39,6 @@ int main(int argc, char **argv) {
 
 
     while (!g.getQuit()) {
-        /*
-         * Brick Space Formula:
-         * xPos = (rand % screenSize) + leftMargin;
-         * if(xPos ){
-         *
-         * }
-         */
-
         for(int i = 0; i < 3; i++){
 
         }
@@ -56,12 +47,9 @@ int main(int argc, char **argv) {
             balls.at(i) -> drawBall();
         }
 
-        brick.drawBrick();
-        brick2.drawBrick();
-        brick3.drawBrick();
-        brick4.drawBrick();
-        brick5.drawBrick();
-
+        for(int i = 0; i < bricks.size(); i++){
+            bricks.at(i).drawBrick();
+        }
 
         for(int i = 0; i < 3; i++){
             balls.at(i) -> applyForce(Gravity);
@@ -90,7 +78,13 @@ int main(int argc, char **argv) {
 
         for(int i = 0; i < balls.size(); i++){
             for(int j = 0; j < bricks.size(); j++){
-                balls.at(i) -> collisionCheck(*bricks.at(j));
+                balls.at(i) -> collisionCheck(bricks.at(j));
+            }
+        }
+        for(int i = 0; i < bricks.size(); i++){
+            if(bricks[i].getColCount() < 1){
+                bricks.erase(bricks.begin() + i);
+                cout << "broke" << endl;
             }
         }
 

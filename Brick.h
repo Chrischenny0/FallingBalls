@@ -17,8 +17,6 @@ private:
 public:
     Brick(int x, int y, BMPImage&, SDLWrapper &g);
 
-    int getLength();
-
     Coordinate& getCenter();
 
     const Coordinate &getLowerLeft() const;
@@ -29,13 +27,11 @@ public:
 
     void moveBrick();
 
-    void outOfBounds();
-
     int getColCount();
 
+
+
     bool collisionBrick(Coordinate &);
-
-
 
 };
 
