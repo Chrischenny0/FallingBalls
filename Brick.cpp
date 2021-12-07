@@ -14,10 +14,11 @@ Brick::Brick(int x, int y, BMPImage &mask, SDLWrapper &g) :
     center.y += mask.getSizeY() / 2.0;
     mask.setPosition(Coordinate(lowerLeft.x, lowerLeft.y));
 }
-
-int Brick::getLength(){
-    return l;
+/*
+Brick::~Brick(){
+    delete brick;
 }
+ */
 
 void Brick::drawBrick(){
     mask -> draw(lowerLeft.x, lowerLeft.y);
@@ -27,18 +28,15 @@ void Brick::moveBrick(){
     lowerLeft.y += 2;
 }
 
-void Brick::outOfBounds(){
-    while(lowerLeft.x + l > g.getWidth() || lowerLeft.y + w > g.getHeight()){
-        if(lowerLeft.x + l < 0){
-            lowerLeft.x += abs(0 - lowerLeft.x + l);
-        }
-        if(lowerLeft.x + l >= g.getWidth()){
-            lowerLeft.x -= abs(g.getWidth() - lowerLeft.x + l);
-        }
-    }
+void Brick::decrementColCount(){
+    colCount--;
 }
 
-bool Brick::collisionBrick(Coordinate &p2) const{
+int Brick::getColCount(){
+    return colCount;
+}
+
+bool Brick::collisionBrick(Coordinate &p2){
     return p2.x >= lowerLeft.x && p2.y >= lowerLeft.y && p2.x <= upperRight.x && p2.y <= upperRight.y;
 }
 

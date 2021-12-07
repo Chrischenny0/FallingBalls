@@ -7,7 +7,7 @@
 
 class Brick{
 private:
-    int l, w;
+    int l, w, colCount = 3;
 
     Coordinate lowerLeft, upperRight, center;
 
@@ -17,7 +17,9 @@ private:
 public:
     Brick(int x, int y, BMPImage&, SDLWrapper &g);
 
-    int getLength();
+    //~Brick();
+
+    //Brick& operator=();
 
     Coordinate& getCenter();
 
@@ -29,11 +31,13 @@ public:
 
     void moveBrick();
 
-    void outOfBounds();
+    void decrementColCount();
 
-    bool collisionBrick(Coordinate &) const;
+    int getColCount();
 
 
+
+    bool collisionBrick(Coordinate &);
 
 };
 
