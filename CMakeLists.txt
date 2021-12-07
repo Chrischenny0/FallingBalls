@@ -14,7 +14,7 @@ set(SOURCE_FILES      main.cpp
         BMPImage.h    BMPImage.cpp
         SDLWrapper.h  SDLWrapper.cpp
         Force.h Force.cpp
-        Brick.h Brick.cpp)
+        Brick.h Brick.cpp Font.cpp Font.h)
 add_executable(FallingBalls ${SOURCE_FILES})
 
 target_link_libraries(FallingBalls mingw32 SDL2main SDL2 SDL2_mixer)

@@ -28,6 +28,7 @@ void Force::apply(const Force &f) {
 }
 
 void Force::redirect(int dir) {
+    normalize();
     if (dir == 0) {
         direction *= -1;
     }
@@ -35,8 +36,8 @@ void Force::redirect(int dir) {
         direction = (PI - abs(direction)) * (direction / abs(direction));
     }
     magnitude *= 1.1;
-    if (magnitude > 2) {
-        magnitude = 2;
+    if (magnitude > maxMag) {
+        magnitude = maxMag;
     }
 }
 
@@ -44,8 +45,8 @@ void Force::normalize() {
     while(abs(direction) > PI){
         direction -= (2 * PI) * abs(direction) / direction;
     }
-    if(magnitude > 1){
-        magnitude = 1;
+    if(magnitude > maxMag){
+        magnitude = maxMag;
     }
 }
 
