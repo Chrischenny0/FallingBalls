@@ -8,24 +8,17 @@ BMPImage::BMPImage(const string &name, int x, int y, SDLWrapper &g, bool ball) :
     ifstream dataSizes;
 
     unsigned char newByte;
-    int dataL;
 
     vector<string> rawBinary;
     vector<string> headerData;
 
-    vector<int> byteType;
+    vector<int> byteType{0, 2, 6, 8, 10, 14, 18, 22, 26,
+                         28, 30, 34, 38, 42, 46, 50, 54,
+                         56, 58, 60, 64, 68, 72, 76, 80};
 
     vector<vector<vector<unsigned char>>> RGBTemp;
     vector<vector<unsigned char>> RGBRowTemp;
     vector<unsigned char> pixelTemp;
-
-    dataSizes.open("byteRanges.txt");
-    assert(dataSizes.is_open());
-
-    while (dataSizes >> dataL) {
-        byteType.push_back(dataL);
-    }
-    dataSizes.close();
 
     input.open(name, fstream::binary);
     assert(input.is_open());
@@ -44,14 +37,7 @@ BMPImage::BMPImage(const string &name, int x, int y, SDLWrapper &g, bool ball) :
                 swap(rawBinary.at(byteType.at(i) + j),
                      rawBinary.at(byteType.at(i + 1) - j - 1));
             }
-        }
-    }
-
-
-    for (int i = 0; i < byteType.size() - 1; i++) {
-        int range = byteType.at(i + 1) - byteType.at(i);
-        headerData.push_back(rawBinary.at(byteType.at(i)));
-        if (range > 1) {
+            headerData.push_back(rawBinary.at(byteType.at(i)));
             for (int j = 1; j < range; j++) {
                 headerData.at(i).append(rawBinary.at(byteType.at(i) + j));
             }
@@ -64,7 +50,6 @@ BMPImage::BMPImage(const string &name, int x, int y, SDLWrapper &g, bool ball) :
     rawBinary.clear();
     input.seekg(stoi(headerData.at(4), 0, 2));
 
-    cout << stoi(headerData.at(9), 0, 2) << endl;
     pixelByte = (stoi(headerData.at(9), 0, 2) == 24) ? 3 : 4;
     this->alpha = (pixelByte == 4);
 
