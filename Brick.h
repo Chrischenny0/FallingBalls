@@ -7,7 +7,7 @@
 
 class Brick{
 private:
-    int l, w;
+    int l, w, colCount = 3;
 
     Coordinate lowerLeft, upperRight, center;
 
@@ -31,7 +31,9 @@ public:
 
     void outOfBounds();
 
-    bool collisionBrick(Coordinate &) const;
+    int getColCount();
+
+    bool collisionBrick(Coordinate &);
 
 
 

@@ -38,8 +38,19 @@ void Brick::outOfBounds(){
     }
 }
 
-bool Brick::collisionBrick(Coordinate &p2) const{
-    return p2.x >= lowerLeft.x && p2.y >= lowerLeft.y && p2.x <= upperRight.x && p2.y <= upperRight.y;
+int Brick::getColCount(){
+    return colCount;
+}
+
+bool Brick::collisionBrick(Coordinate &p2){
+    bool result;
+    result = p2.x >= lowerLeft.x && p2.y >= lowerLeft.y && p2.x <= upperRight.x && p2.y <= upperRight.y;
+    /*
+    if (result){
+        colCount--;
+    }
+    */
+    return result;
 }
 
 Coordinate& Brick::getCenter(){
