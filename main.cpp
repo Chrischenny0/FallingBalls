@@ -9,9 +9,12 @@ int main(int argc, char **argv) {
     Coordinate lowerBound(15, 25), upperBound(765, 925); //750 x 900
     SDLWrapper g(disWidth, disLength, false);
 
-    BMPImage background("images/BackgroundV2.bmp", 0, 0, g);
+    BMPImage background("images/BackgroundV3.bmp", 0, 0, g);
     BMPImage ballMask("images/BallV2.bmp", 0, 0, g);
     BMPImage brickMask("images/Brick.bmp", 0, 0, g);
+
+    Font highScore(g, Coordinate(900, 200));
+    highScore.setMessage("hello");
     background.setBackground();
 
     vector<Brick*> bricks;
@@ -19,11 +22,15 @@ int main(int argc, char **argv) {
     bricks.push_back(new Brick(300, 200, brickMask, g));
     bricks.push_back(new Brick(450, 200, brickMask, g));
     bricks.push_back(new Brick(600, 200, brickMask, g));
+    bricks.push_back(new Brick(150, 400, brickMask, g));
+    bricks.push_back(new Brick(300, 400, brickMask, g));
+    bricks.push_back(new Brick(450, 400, brickMask, g));
+    bricks.push_back(new Brick(600, 400, brickMask, g));
 
     vector<Ball*> balls;
-    balls.push_back(new Ball(300, 300, ballMask, g, lowerBound, upperBound));
-    balls.push_back(new Ball(100, 400, ballMask, g, lowerBound, upperBound));
-    balls.push_back(new Ball(600, 450, ballMask, g, lowerBound, upperBound));
+    balls.push_back(new Ball(300, 600, ballMask, g, lowerBound, upperBound));
+    balls.push_back(new Ball(100, 600, ballMask, g, lowerBound, upperBound));
+    balls.push_back(new Ball(600, 600, ballMask, g, lowerBound, upperBound));
 
     while (!g.getQuit()) {
 
@@ -33,6 +40,7 @@ int main(int argc, char **argv) {
         for(int i = 0; i < bricks.size(); i++){
             bricks.at(i) -> drawBrick();
         }
+        highScore.draw();
 
         for(int i = 0; i < balls.size(); i++){
             balls.at(i) -> applyForce(Gravity);

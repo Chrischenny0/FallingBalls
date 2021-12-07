@@ -5,11 +5,23 @@
 
 class Font {
 private:
-    vector<BMPImage> characters;
-    vector<BMPImage> numbers;
+    vector<BMPImage*> characters;
+    vector<BMPImage*> numbers;
+
+    vector<int> message;
+
+    Coordinate lowerLeft;
+
+    string messageStr;
 
 public:
-    Font();
+    Font(SDLWrapper &, Coordinate lowerLeft);
+
+    void setLocation(Coordinate);
+
+    void setMessage(const string&);
+
+    void draw();
 };
 
 
