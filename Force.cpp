@@ -44,8 +44,8 @@ void Force::normalize() {
     while(abs(direction) > PI){
         direction -= (2 * PI) * abs(direction) / direction;
     }
-    if(magnitude > 2){
-        magnitude = 2;
+    if(magnitude > 1){
+        magnitude = 1;
     }
 }
 
