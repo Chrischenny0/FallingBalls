@@ -79,10 +79,9 @@ void Ball::stepBack(Ball &ballCheck) {
 }
 
 void Ball::collisionCheck(Brick &b){
-    double vertBoundsL = tan(31.0/69.0);
     vector.normalize();
-
     Coordinate& bCenter = b.getCenter();
+
     double theta = atan(center.slope(b.getCenter()));
 
     if(center.x > bCenter.x){
@@ -108,13 +107,13 @@ void Ball::collisionCheck(Brick &b){
             intersection.y = r * sin(theta) + center.y;
         }
 
-        if(theta > vertBoundsL && theta < PI - vertBoundsL){
+        if(center.x > b.getLowerLeft().x && center.x < b.getUpperRight().x){
             vector.redirect(0);
         }
         else{
             vector.redirect(1);
         }
-        vector.setMag(vector.getMag() * 1.01);
+
         vector.normalize();
         moveBall();
     }
