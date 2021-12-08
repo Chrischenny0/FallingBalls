@@ -2,8 +2,8 @@
 
 
 Force::Force() {
-    magnitude = 0.8;
-    direction = PI / 5;
+    magnitude = 0;
+    direction = - PI / 2;
 }
 
 Force::Force(double m, double d) {

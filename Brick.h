@@ -4,18 +4,21 @@
 #include "Coordinate.h"
 #include "Force.h"
 #include "BMPImage.h"
+#include "Font.h"
 
 class Brick{
 private:
-    int l, w, colCount = 3;
+    int l, w, hp = 3;
 
     Coordinate lowerLeft, upperRight, center;
 
     BMPImage *mask;
     SDLWrapper &g;
 
+    Font *hpFont;
+
 public:
-    Brick(int x, int y, BMPImage&, SDLWrapper &g);
+    Brick(int x, int y, BMPImage *mask, SDLWrapper &g, Font *hpFont, int hp);
 
     Coordinate& getCenter();
 
@@ -26,6 +29,8 @@ public:
     void drawBrick();
 
     void redrawBackground() const;
+
+    void redrawBackground(const Coordinate &coord) const;
 
     void moveBrick();
 

@@ -21,7 +21,7 @@ private:
     Coordinate pos;
     int sizeX, sizeY, pixelByte;
     string name;
-    bool alpha, ball = false;
+    bool alpha, object = false;
 
     //
     SDLWrapper &g;
@@ -30,7 +30,7 @@ private:
     vector<vector<vector<unsigned char>>> RGB;
 public:
     //Constructor
-    BMPImage(const string &name, int x, int y, SDLWrapper &g, bool ball = false);
+    BMPImage(const string &name, int x, int y, SDLWrapper &g, bool object = false);
 
     //Setters
     void setPosition(const Coordinate &);

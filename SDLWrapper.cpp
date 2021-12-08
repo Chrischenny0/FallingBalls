@@ -59,10 +59,11 @@ void SDLWrapper::setBackground(const vector<vector<vector<unsigned char>>>
 }
 
 void SDLWrapper::redrawBkG(int x, int y, const vector<vector<vector<unsigned char>>> &mask) {
+    bool alpha = (mask.at(0).at(0).size() == 4);
 
     for(int i = 0; i < mask.size(); i++){
         for(int j = 0; j < mask.at(i).size(); j++){
-            if (mask.at(i).at(j).at(3) == 255){
+            if (!alpha || mask.at(i).at(j).at(3) == 255){
                 if (i + y >= 0 && i + y < height && j + x >= 0 && j + x < width) {
                     drawPixel(j + x, i + y, background.at(i + y).at(j + x).at(2),background.at(i + y).at(j + x).at(1),background.at(i + y).at(j + x).at(0));
                 }
@@ -71,8 +72,20 @@ void SDLWrapper::redrawBkG(int x, int y, const vector<vector<vector<unsigned cha
     }
 }
 
-void SDLWrapper::Sleep(int ms) {
+void SDLWrapper::redrawBkG(Coordinate lowerleft, Coordinate upperRight) {
+    int x = lowerleft.x;
+    int y = lowerleft.y;
+    for(int i = 0; i < upperRight.y - lowerleft.y; i++){
+        for(int j = 0; j < upperRight.x - lowerleft.x; j++){
+            if (i + lowerleft.y >= 0 && i + lowerleft.y < height && j + lowerleft.x >= 0 && j + lowerleft.x < width) {
+                drawPixel(j + x, i + y, background.at(i + y).at(j + x).at(2),background.at(i + y).at(j + x).at(1),background.at(i + y).at(j + x).at(0));
+            }
+        }
+    }
+}
 
+void SDLWrapper::Sleep(int ms) {
+    g.Sleep(ms);
 }
 
 bool SDLWrapper::getMouseClick(int &x, int &y) {

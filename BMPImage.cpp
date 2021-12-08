@@ -1,7 +1,7 @@
 #include "BMPImage.h"
 
-BMPImage::BMPImage(const string &name, int x, int y, SDLWrapper &g, bool ball) : pos(x, y),
-                                                                                 g(g), ball(ball) {
+BMPImage::BMPImage(const string &name, int x, int y, SDLWrapper &g, bool object) : pos(x, y),
+                                                                                 g(g), object(object) {
     this->name = name;
 
     ifstream input;
@@ -86,7 +86,7 @@ void BMPImage::draw(const Coordinate &corner, const Coordinate lowerBound) {
 
     for (int i = 0; i < sizeY; i++) {
         for (int j = 0; j < sizeX; j++) {
-            if(!ball || corner.y + i > lowerBound.y){
+            if(!object || corner.y + i > lowerBound.y){
                 if (!alpha || RGB.at(i).at(j).at(3) == 255) {
                     g.drawPixel(corner.x + j, corner.y + i,
                                 RGB.at(i).at(j).at(2),

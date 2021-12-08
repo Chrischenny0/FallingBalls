@@ -20,7 +20,14 @@ private:
 public:
     Coordinate getCoords();
 
-    Ball(int x, int y, BMPImage &image, SDLWrapper &g, Coordinate &lowerBound, Coordinate &upperBound);
+    Ball(Coordinate center, BMPImage *image, SDLWrapper &g, Coordinate &lowerBound, Coordinate &upperBound);
+
+    void setMagDir(Force);
+
+    void resetCenter(){
+        center.x = 390;
+        center.y = -10;
+    }
 
     void drawBall();
 
@@ -34,7 +41,7 @@ public:
 
     void collisionCheck(Ball &ballCheck);
 
-    void collisionCheck(Brick &b2);
+    bool collisionCheck(Brick &b2);
 
     void stepBack(Ball &ballCheck);
 };

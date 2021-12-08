@@ -5,6 +5,9 @@
 #include <vector>
 #include "Coordinate.h"
 #include "SDL_Plotter.h"
+#include <ctime>
+#include <chrono>
+#include <sys/time.h>
 
 class SDLWrapper {
 private:
@@ -14,6 +17,11 @@ private:
     //SDlWrapper Variables
     int width, height;
     vector<vector<vector<unsigned char>>> background;
+
+    //For fps lock
+    time_t curr = time(nullptr);
+    int fps = 0;
+    double sleep = 5;
 
 public:
     //Constructor
@@ -50,8 +58,9 @@ public:
     //SDLWrapper Functions
     void setBackground(const vector<vector<vector<unsigned char>>> &newBKG);
 
-    void
-    redrawBkG(int x, int y, const vector<vector<vector<unsigned char>>> &mask);
+    void redrawBkG(int x, int y, const vector<vector<vector<unsigned char>>> &mask);
+    void redrawBkG(Coordinate lowerleft, Coordinate upperRight);
+
 };
 
 #endif //CL10_18_2021_SDLWRAPPER_H

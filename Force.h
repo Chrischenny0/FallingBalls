@@ -44,7 +44,7 @@ public:
     void collide(Force &f2, double slope, double differenceY, double differenceX);
 };
 
-const Force Gravity(0.02, -(PI / 2));
-const double maxMag = 1;
+const Force Gravity(0.01, -(PI / 2));
+const double maxMag = 2;
 
 #endif //FALLINGBALLS_FORCE_H

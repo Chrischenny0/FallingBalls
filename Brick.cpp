@@ -3,37 +3,40 @@
 //
 
 #include "Brick.h"
+#include "Font.h"
 
-Brick::Brick(int x, int y, BMPImage &mask, SDLWrapper &g) :
-        mask(&mask), g(g), lowerLeft(x, y), upperRight(x, y), center(x, y){
+Brick::Brick(int x, int y, BMPImage *mask, SDLWrapper &g, Font *hpFont, int hp) :
+        mask(mask), g(g), lowerLeft(x, y), upperRight(x, y), center(x, y), hpFont(hpFont), hp(hp){
 
-    upperRight.x += mask.getSizeX();
-    upperRight.y += mask.getSizeY();
+    upperRight.x += mask -> getSizeX();
+    upperRight.y += mask -> getSizeY();
 
-    center.x += mask.getSizeX() / 2.0;
-    center.y += mask.getSizeY() / 2.0;
-    mask.setPosition(Coordinate(lowerLeft.x, lowerLeft.y));
+    center.x += mask -> getSizeX() / 2.0;
+    center.y += mask -> getSizeY() / 2.0;
+    mask -> setPosition(Coordinate(lowerLeft.x, lowerLeft.y));
 }
-/*
-Brick::~Brick(){
-    delete brick;
-}
- */
 
 void Brick::drawBrick(){
-    mask->draw(lowerLeft, Coordinate(0, 0));
+    mask->draw(lowerLeft, Coordinate(15,25));
+    hpFont ->setMessage(to_string(hp));
+    hpFont->draw();
 }
 
 void Brick::moveBrick(){
-    lowerLeft.y += 2;
+    Coordinate previous = lowerLeft;
+    lowerLeft.y += 75;
+    center.y += 75;
+    upperRight.y += 75;
+    hpFont->setLocation(center);
+    redrawBackground(previous);
 }
 
 void Brick::decrementColCount(){
-    colCount--;
+    hp--;
 }
 
 int Brick::getColCount(){
-    return colCount;
+    return hp;
 }
 
 bool Brick::collisionBrick(Coordinate &p2){
@@ -53,6 +56,10 @@ const Coordinate &Brick::getUpperRight() const {
 }
 
 void Brick::redrawBackground() const {
-    mask -> redrawBkG(lowerLeft);
+    redrawBackground(lowerLeft);
+}
+
+void Brick::redrawBackground(const Coordinate &coord) const {
+    mask ->redrawBkG(coord);
 }
 

@@ -27,7 +27,6 @@ struct Coordinate {
     Coordinate adjust(double) const;
 
     void display() const{
-        cout << x << ", " << y << endl;
     }
 
     bool operator<(const Coordinate &rhs) const;

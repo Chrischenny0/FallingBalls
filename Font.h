@@ -11,16 +11,24 @@ private:
     vector<int> message;
 
     Coordinate lowerLeft;
+    bool centered;
 
-    string messageStr;
+    int length = 0;
 
 public:
-    Font(SDLWrapper &, Coordinate lowerLeft, vector<BMPImage *> &characters,
-         vector<BMPImage *> &numbers);
+    Font(SDLWrapper &, Coordinate lowerLeft, vector<BMPImage *> &characters, vector<BMPImage *> &numbers,
+         bool centered = false);
 
+    Coordinate getLocation();
     void setLocation(Coordinate);
 
     void setMessage(const string&);
+
+    void getMessage(string &);
+
+    int getCharLength(char);
+
+    void append(char newChar, SDLWrapper &);
 
     void draw();
 };
