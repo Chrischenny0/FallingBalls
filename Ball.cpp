@@ -46,6 +46,7 @@ void Ball::collisionCheck(Ball &ballCheck) {
             moveBall();
             ballCheck.moveBall();
         }
+        g.startSound("Sounds/hitSound.mp3");
     }
     outOfBounds();
 }

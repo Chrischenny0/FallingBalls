@@ -26,7 +26,7 @@ public:
 
     void resetCenter(){
         center.x = 390;
-        center.y = -10;
+        center.y = 880;
     }
 
     void drawBall();

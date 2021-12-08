@@ -8,9 +8,6 @@ int main(int argc, char **argv) {
     Game game;
 
     game.startUp();
-
-    game.getName();
-
     game.startGame();
 
     while(!game.endGame() && game.isRunning()){
@@ -18,11 +15,11 @@ int main(int argc, char **argv) {
         game.gameGoing();
         game.incrementGame();
     }
-    game.end();
+    /*game.end();
     while(!game.endGame()){
         game.end_tick();
         this_thread::sleep_for(chrono::seconds(1));
-    }
+    }*/
 
     return 0;
 }

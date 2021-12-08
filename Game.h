@@ -14,7 +14,7 @@ private:
     int disLength = 950;
     Coordinate lowerBound, upperBound; //750 x 900
     SDLWrapper g;
-    bool gameEnded;
+    bool gameEnded = false;
 
     //Font Class Images
     vector<BMPImage*> characters;
@@ -24,14 +24,11 @@ private:
     BMPImage *ballMask, *background, *brickMask;
 
     //Game Variables
-    string currUser;
     int score = 0;
     bool dead = false;
 
     //Game Objects
-    Font *currentScore, *highscore;
-    vector<Font*> leaderBoard;
-    vector<string> leaders;
+    Font *currentScore;
 
     vector<Ball*> balls;
     vector<Ball*> liveBalls;
@@ -45,8 +42,6 @@ public:
     Game();
 
     void startUp();
-
-    void getName();
 
     void startGame();
 

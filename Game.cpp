@@ -2,8 +2,8 @@
 
 Game::Game() : lowerBound(15, 25), upperBound(765, 925), g(disWidth, disLength, false) {
     ballMask = brickMask = nullptr;
-    currentScore = highscore = nullptr;
-    background = new BMPImage("images/OpeningScreen.bmp", 0, 0, g, false);
+    currentScore = nullptr;
+    background = new BMPImage("images/BackgroundFinal.bmp", 0, 0, g, false);
 }
 
 void Game::startUp() {
@@ -13,7 +13,7 @@ void Game::startUp() {
 
     for (int i = 0; i < 26; i++) {
         fileName = "Fonts/";
-        fileName += char('A' + i);
+        fileName += char('a' + i);
         fileName += ".bmp";
         characters.emplace_back(new BMPImage(fileName, 0, 0, g, false));
     }
@@ -24,41 +24,14 @@ void Game::startUp() {
         fileName += ".bmp";
         numbers.emplace_back(new BMPImage(fileName, 0, 0, g, false));
     }
+    g.setSound("Sounds/hitSound.mp3");
 
     g.update();
 }
 
-void Game::getName() {
-    Font username(g, Coordinate(100, 600), characters, numbers, false);
-    char newChar;
-    bool gotName = false;
-    while (!gotName && !g.getQuit()) {
-        while (g.getMouseClick(x, y)) {
-            g.getMouseDown(x, y);
-            y = disLength - y;
-            g.getKey();
-            g.kbhit();
-            g.getMouseLocation(x, y);
-        }
-        if (g.kbhit()) {
-            newChar = g.getKey();
-            if (newChar != 40) {
-                username.append(newChar, g);
-                username.draw();
-            } else {
-                gotName = true;
-                delete background;
-                background = nullptr;
-            }
-        }
-        g.update();
-    }
-    username.getMessage(currUser);
-}
 
 void Game::startGame() {
     string temp;
-    ifstream leaderboardFile("Scores/Leaderboard");
 
     vector<int> indexes{0, 1, 2, 3, 4};
     background = new BMPImage("images/BackgroundFinal.bmp", 0, 0, g, false);
@@ -66,26 +39,14 @@ void Game::startGame() {
     brickMask = new BMPImage("images/BrickV3.bmp", 0, 0, g, true);
 
     currentScore = new Font(g, Coordinate(985, 725), characters, numbers, true);
-    highscore = new Font(g, Coordinate(985, 550), characters, numbers, true);
-
     background->setBackground();
 
     currentScore->setMessage("0");
-    highscore->setMessage("0");
 
     currentScore->draw();
-    highscore->draw();
-
-    while (getline(leaderboardFile, temp) && leaderBoard.size() < 5) {
-        leaderBoard.push_back(
-                new Font(g, Coordinate(810, 310 - (leaderBoard.size() - 1) * 60), characters, numbers, false));
-        leaderBoard.at(leaderBoard.size() - 1)->setMessage(temp);
-        leaderBoard.at(leaderBoard.size() - 1)->draw();
-    }
 
     for (int i = 0; i < 3; i++) {
-        balls.push_back(new Ball(Coordinate(390, -10), ballMask, g, lowerBound, upperBound));
-
+        balls.push_back(new Ball(Coordinate(390, 880), ballMask, g, lowerBound, upperBound));
     }
 
     srand(time(0));
@@ -169,6 +130,7 @@ void Game::gameGoing() {
             }
             for (int j = bricks.size() - 1; j >= 0; j--) {
                 if (liveBalls.at(i)->collisionCheck(*bricks.at(j))) {
+                    g.startSound("Sounds/hitSound.mp3");
                     bricks.at(j)->drawBrick();
                     if (bricks.at(j)->getColCount() <= 0) {
                         bricks.at(j)->redrawBackground();
@@ -202,20 +164,14 @@ void Game::incrementGame() {
     if (!gameEnded) {
         vector<int> indexes{0, 1, 2, 3, 4};
         string currHighscore;
-        highscore->getMessage(currHighscore);
         score++;
 
         currentScore->setMessage(to_string(score));
-        highscore->setMessage(to_string(max(stoi(currHighscore), score)));
 
         background->redrawBkG(Coordinate(0, 0));
 
 
         currentScore->draw();
-        highscore->draw();
-        for (int i = 0; i < leaderBoard.size(); i++) {
-            leaderBoard.at(i)->draw();
-        }
 
         for (int i = 0; i < balls.size(); i++) {
             balls.at(i)->resetCenter();
@@ -254,68 +210,8 @@ bool Game::endGame() {
     return gameEnded;
 }
 
-void Game::end() {
-    gameEnded = false;
-    bool inserted = false;
-    string previous_message;
-    for (int i = 0; i < leaderBoard.size(); i++) {
-        if (!inserted) {
-            string compared;
-            string highscoreCurrent;
-            leaderBoard.at(i)->getMessage(compared);
-            highscore->getMessage(highscoreCurrent);
-            int comparison = score - stoi(compared.substr(compared.find_last_of(' ')));
-            if (comparison > 0) {
-                inserted = true;
-                leaderBoard.at(i)->getMessage(previous_message);
-                leaderBoard.at(i)->setMessage(currUser + " " + to_string(score));
-                leaderBoard.at(i)->draw();
-            }
-        } else {
-            string temp;
-            leaderBoard.at(i)->getMessage(temp);
-            leaderBoard.at(i)->setMessage(previous_message);
-            previous_message = temp;
-        }
-    }
-
-    if (inserted && leaderBoard.size() < 5) {
-        Font *insertFont = new Font(g, Coordinate(810, 310 - (4) * 60), characters, numbers, false);
-        leaderBoard.push_back(insertFont);
-    }
-
-    background->redrawBkG(Coordinate(0, 0));
-
-    currentScore->draw();
-    highscore->draw();
-
-    for (int i = 0; i < leaderBoard.size(); i++) {
-        leaderBoard.at(i)->draw();
-    }
-
-    for (int i = 0; i < bricks.size(); i++) {
-        bricks.at(i)->drawBrick();
-    }
-
-}
-
-void Game::end_tick() {
-    background->redrawBkG(Coordinate(0, 0));
-
-    currentScore->draw();
-    highscore->draw();
-
-    for (int i = 0; i < leaderBoard.size(); i++) {
-        leaderBoard.at(i)->draw();
-    }
-
-    for (int i = 0; i < bricks.size(); i++) {
-        bricks.at(i)->drawBrick();
-    }
-}
 
 bool Game::isRunning() {
-
     return !dead;
 }
 
