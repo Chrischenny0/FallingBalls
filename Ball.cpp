@@ -1,11 +1,22 @@
+/*
+ * AUTHOR: Christopher Chenoweth, Katie Boatwright, Luke Smith,
+ *    Preston Witschonke, Shepard Berry
+ * ASSIGNMENT TITLE: Falling Balls
+ * ASSIGNMENT DESCRIPTION:
+ *      Create a version of the game falling balls.
+ * DUE DATE: 12/08/2021
+ * DATE CREATED: 11/03/2021
+ * DATE LAST MODIFIED: 12/08/2021
+ */
 #include "Ball.h"
 
-Ball::Ball(Coordinate center, BMPImage *image, SDLWrapper &g, Coordinate &lowerBound, Coordinate &upperBound) :
-                                                           center(center), previousCord(center),
-                                                           mask(image), g(g),
-                                                           lowerBound(lowerBound), upperBound(upperBound) {
-    r = (mask -> getSizeX()) / 2;
-    mask -> setPosition(Coordinate(center.x - r, center.y - r));
+Ball::Ball(Coordinate center, BMPImage *image, SDLWrapper &g,
+           Coordinate &lowerBound, Coordinate &upperBound) :
+        center(center), previousCord(center),
+        mask(image), g(g),
+        lowerBound(lowerBound), upperBound(upperBound) {
+    r = (mask->getSizeX()) / 2;
+    mask->setPosition(Coordinate(center.x - r, center.y - r));
 }
 
 void Ball::drawBall() {
@@ -40,9 +51,10 @@ void Ball::collisionCheck(Ball &ballCheck) {
 
         double slope = -1 / center.slope(ballCheck.center);
 
-        vector.collide(ballCheck.vector, slope, center.y - ballCheck.center.y, center.x - ballCheck.center.x);
+        vector.collide(ballCheck.vector, slope, center.y - ballCheck.center.y,
+                       center.x - ballCheck.center.x);
 
-        while(center.distance(ballCheck.center) < r + ballCheck.r){
+        while (center.distance(ballCheck.center) < r + ballCheck.r) {
             moveBall();
             ballCheck.moveBall();
         }
@@ -57,40 +69,42 @@ Coordinate Ball::getCoords() {
 
 void Ball::outOfBounds() {
     double dirInvert = vector.invert();
-    if(center.x - r < lowerBound.x || center.x + r > upperBound.x){
+    if (center.x - r < lowerBound.x || center.x + r > upperBound.x) {
         vector.redirect(1);
     }
-    if(center.y + r > upperBound.y){
+    if (center.y + r > upperBound.y) {
         vector.redirect(0);
     }
 
-    while(center.x < lowerBound.x || center.adjust(r) >= upperBound){
+    while (center.x < lowerBound.x || center.adjust(r) >= upperBound) {
         moveBall(1, dirInvert);
     }
     moveBall();
 }
 
 void Ball::stepBack(Ball &ballCheck) {
-    double vectInvert1 = vector.invert(), vectInvert2 = ballCheck.vector.invert();
+    double vectInvert1 = vector.invert(),
+            vectInvert2 = ballCheck.vector.invert();
 
-    while(center.distance(ballCheck.center) < r + ballCheck.r){
+    while (center.distance(ballCheck.center) < r + ballCheck.r) {
         moveBall(1, vectInvert1);
         ballCheck.moveBall(1, vectInvert2);
     }
 }
 
-bool Ball::collisionCheck(Brick &b2){
+bool Ball::collisionCheck(Brick &b2) {
     vector.normalize();
-    Coordinate& bCenter = b2.getCenter();
+    Coordinate &bCenter = b2.getCenter();
     bool collision = false;
 
     double theta = atan(center.slope(b2.getCenter()));
 
-    if(center.x > bCenter.x){
+    if (center.x > bCenter.x) {
         theta += PI;
     }
 
-    Coordinate intersection(r * cos(theta) + center.x, r * sin(theta) + center.y);
+    Coordinate intersection(r * cos(theta) + center.x,
+                            r * sin(theta) + center.y);
 
     if (b2.collisionBrick(intersection)) {
         //Added Decrement of Col Count
@@ -98,12 +112,12 @@ bool Ball::collisionCheck(Brick &b2){
 
         double invertVec = vector.invert();
 
-        while(b2.collisionBrick(intersection)){
+        while (b2.collisionBrick(intersection)) {
             moveBall(1, invertVec);
 
             theta = atan(center.slope(b2.getCenter()));
 
-            if(center.x > bCenter.x){
+            if (center.x > bCenter.x) {
                 theta += PI;
             }
 
@@ -111,14 +125,14 @@ bool Ball::collisionCheck(Brick &b2){
             intersection.y = r * sin(theta) + center.y;
         }
 
-        if(center.x >= b2.getLowerLeft().x && center.x <= b2.getUpperRight().x){
+        if (center.x >= b2.getLowerLeft().x &&
+            center.x <= b2.getUpperRight().x) {
 
             vector.redirect(0);
-        }
-        else if(center.y >= b2.getLowerLeft().y && center.y <= b2.getUpperRight().y){
+        } else if (center.y >= b2.getLowerLeft().y &&
+                   center.y <= b2.getUpperRight().y) {
             vector.redirect(1);
-        }
-        else{
+        } else {
             vector.setDir(vector.invert());
         }
 

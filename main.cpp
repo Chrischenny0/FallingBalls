@@ -1,7 +1,14 @@
+/*
+ * AUTHOR: Christopher Chenoweth, Katie Boatwright, Luke Smith,
+ *    Preston Witschonke, Shepard Berry
+ * ASSIGNMENT TITLE: Falling Balls
+ * ASSIGNMENT DESCRIPTION:
+ *      Create a version of the game falling balls.
+ * DUE DATE: 12/08/2021
+ * DATE CREATED: 11/03/2021
+ * DATE LAST MODIFIED: 12/08/2021
+ */
 #include "Game.h"
-#include <thread>
-
-using namespace std;
 
 int main(int argc, char **argv) {
 
@@ -15,11 +22,6 @@ int main(int argc, char **argv) {
         game.gameGoing();
         game.incrementGame();
     }
-    /*game.end();
-    while(!game.endGame()){
-        game.end_tick();
-        this_thread::sleep_for(chrono::seconds(1));
-    }*/
 
     return 0;
 }

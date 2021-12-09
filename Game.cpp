@@ -1,9 +1,20 @@
+/*
+ * AUTHOR: Christopher Chenoweth, Katie Boatwright, Luke Smith,
+ *    Preston Witschonke, Shepard Berry
+ * ASSIGNMENT TITLE: Falling Balls
+ * ASSIGNMENT DESCRIPTION:
+ *      Create a version of the game falling balls.
+ * DUE DATE: 12/08/2021
+ * DATE CREATED: 11/03/2021
+ * DATE LAST MODIFIED: 12/08/2021
+ */
 #include "Game.h"
 
-Game::Game() : lowerBound(15, 25), upperBound(765, 925), g(disWidth, disLength, false) {
+Game::Game() : lowerBound(15, 25), upperBound(765, 925),
+               g(disWidth, disLength, false) {
     ballMask = brickMask = nullptr;
     currentScore = nullptr;
-    background = new BMPImage("images/BackgroundFinal.bmp", 0, 0, g, false);
+    background = new BMPImage("images/Background.bmp", 0, 0, g, false);
 }
 
 void Game::startUp() {
@@ -34,11 +45,11 @@ void Game::startGame() {
     string temp;
 
     vector<int> indexes{0, 1, 2, 3, 4};
-    background = new BMPImage("images/BackgroundFinal.bmp", 0, 0, g, false);
-    ballMask = new BMPImage("images/BallV2.bmp", 0, 0, g, true);
-    brickMask = new BMPImage("images/BrickV3.bmp", 0, 0, g, true);
+    background = new BMPImage("images/Background.bmp", 0, 0, g, false);
+    ballMask = new BMPImage("images/Ball.bmp", 0, 0, g, true);
+    brickMask = new BMPImage("images/Brick.bmp", 0, 0, g, true);
 
-    currentScore = new Font(g, Coordinate(985, 725), characters, numbers, true);
+    currentScore = new Font(g, Coordinate(985, 685), characters, numbers, true);
     background->setBackground();
 
     currentScore->setMessage("0");
@@ -46,7 +57,8 @@ void Game::startGame() {
     currentScore->draw();
 
     for (int i = 0; i < 3; i++) {
-        balls.push_back(new Ball(Coordinate(390, 880), ballMask, g, lowerBound, upperBound));
+        balls.push_back(new Ball(Coordinate(390, 880), ballMask, g,
+                                 lowerBound, upperBound));
     }
 
     srand(time(0));
@@ -54,7 +66,8 @@ void Game::startGame() {
         int randIndex = rand() % indexes.size();
         int j = indexes.at(randIndex);
         indexes.erase(indexes.begin() + randIndex);
-        Font *tmp = new Font(g, Coordinate(40 + 150 * j + 50, 60 + 23), characters, numbers, true);
+        Font *tmp = new Font(g, Coordinate(40 + 150 * j + 50, 60 + 23),
+                             characters, numbers, true);
         bricks.push_back(new Brick(40 + 150 * j, 60, brickMask, g, tmp, 3));
     }
 }
@@ -180,8 +193,10 @@ void Game::incrementGame() {
             int randIndex = rand() % indexes.size();
             int j = indexes.at(randIndex);
             indexes.erase(indexes.begin() + randIndex);
-            Font *tmp = new Font(g, Coordinate(40 + 150 * j + 50, 31), characters, numbers, true);
-            bricks.push_back(new Brick(40 + 150 * j, -15, brickMask, g, tmp, 3 + score / 2));
+            Font *tmp = new Font(g, Coordinate(40 + 150 * j + 50, 31),
+                                 characters, numbers, true);
+            bricks.push_back(new Brick(40 + 150 * j, -15, brickMask, g, tmp,
+                                       3 + score / 2));
         }
         for (int i = 0; i < bricks.size(); i++) {
             bricks.at(i)->moveBrick();
@@ -210,9 +225,6 @@ bool Game::endGame() {
     return gameEnded;
 }
 
-
 bool Game::isRunning() {
     return !dead;
 }
-
-

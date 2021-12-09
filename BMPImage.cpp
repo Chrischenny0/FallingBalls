@@ -1,7 +1,17 @@
+/*
+ * AUTHOR: Christopher Chenoweth, Katie Boatwright, Luke Smith,
+ *    Preston Witschonke, Shepard Berry
+ * ASSIGNMENT TITLE: Falling Balls
+ * ASSIGNMENT DESCRIPTION:
+ *      Create a version of the game falling balls.
+ * DUE DATE: 12/08/2021
+ * DATE CREATED: 11/03/2021
+ * DATE LAST MODIFIED: 12/08/2021
+ */
 #include "BMPImage.h"
 
-BMPImage::BMPImage(const string &name, int x, int y, SDLWrapper &g, bool object) : pos(x, y),
-                                                                                 g(g), object(object) {
+BMPImage::BMPImage(const string &name, int x, int y, SDLWrapper &g, bool object)
+        : pos(x, y), g(g), object(object) {
     this->name = name;
 
     ifstream input;
@@ -86,7 +96,7 @@ void BMPImage::draw(const Coordinate &corner, const Coordinate lowerBound) {
 
     for (int i = 0; i < sizeY; i++) {
         for (int j = 0; j < sizeX; j++) {
-            if(!object || corner.y + i > lowerBound.y){
+            if (!object || corner.y + i > lowerBound.y) {
                 if (!alpha || RGB.at(i).at(j).at(3) == 255) {
                     g.drawPixel(corner.x + j, corner.y + i,
                                 RGB.at(i).at(j).at(2),

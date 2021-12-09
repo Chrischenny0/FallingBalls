@@ -1,8 +1,18 @@
+/*
+ * AUTHOR: Christopher Chenoweth, Katie Boatwright, Luke Smith,
+ *    Preston Witschonke, Shepard Berry
+ * ASSIGNMENT TITLE: Falling Balls
+ * ASSIGNMENT DESCRIPTION:
+ *      Create a version of the game falling balls.
+ * DUE DATE: 12/08/2021
+ * DATE CREATED: 11/03/2021
+ * DATE LAST MODIFIED: 12/08/2021
+ */
 #include "SDLWrapper.h"
 #include "BMPImage.h"
 
 //Constructor
-SDLWrapper::SDLWrapper(int width, int height, bool s) : g(height, width, s){
+SDLWrapper::SDLWrapper(int width, int height, bool s) : g(height, width, s) {
     this->width = width;
     this->height = height;
 }
@@ -58,14 +68,19 @@ void SDLWrapper::setBackground(const vector<vector<vector<unsigned char>>>
     background = newBKG;
 }
 
-void SDLWrapper::redrawBkG(int x, int y, const vector<vector<vector<unsigned char>>> &mask) {
+void SDLWrapper::redrawBkG(int x, int y,
+                           const vector<vector<vector<unsigned char>>> &mask) {
     bool alpha = (mask.at(0).at(0).size() == 4);
 
-    for(int i = 0; i < mask.size(); i++){
-        for(int j = 0; j < mask.at(i).size(); j++){
-            if (!alpha || mask.at(i).at(j).at(3) == 255){
-                if (i + y >= 0 && i + y < height && j + x >= 0 && j + x < width) {
-                    drawPixel(j + x, i + y, background.at(i + y).at(j + x).at(2),background.at(i + y).at(j + x).at(1),background.at(i + y).at(j + x).at(0));
+    for (int i = 0; i < mask.size(); i++) {
+        for (int j = 0; j < mask.at(i).size(); j++) {
+            if (!alpha || mask.at(i).at(j).at(3) == 255) {
+                if (i + y >= 0 && i + y < height && j + x >= 0 &&
+                    j + x < width) {
+                    drawPixel(j + x, i + y,
+                              background.at(i + y).at(j + x).at(2),
+                              background.at(i + y).at(j + x).at(1),
+                              background.at(i + y).at(j + x).at(0));
                 }
             }
         }
@@ -75,10 +90,13 @@ void SDLWrapper::redrawBkG(int x, int y, const vector<vector<vector<unsigned cha
 void SDLWrapper::redrawBkG(Coordinate lowerleft, Coordinate upperRight) {
     int x = lowerleft.x;
     int y = lowerleft.y;
-    for(int i = 0; i < upperRight.y - lowerleft.y; i++){
-        for(int j = 0; j < upperRight.x - lowerleft.x; j++){
-            if (i + lowerleft.y >= 0 && i + lowerleft.y < height && j + lowerleft.x >= 0 && j + lowerleft.x < width) {
-                drawPixel(j + x, i + y, background.at(i + y).at(j + x).at(2),background.at(i + y).at(j + x).at(1),background.at(i + y).at(j + x).at(0));
+    for (int i = 0; i < upperRight.y - lowerleft.y; i++) {
+        for (int j = 0; j < upperRight.x - lowerleft.x; j++) {
+            if (i + lowerleft.y >= 0 && i + lowerleft.y < height &&
+                j + lowerleft.x >= 0 && j + lowerleft.x < width) {
+                drawPixel(j + x, i + y, background.at(i + y).at(j + x).at(2),
+                          background.at(i + y).at(j + x).at(1),
+                          background.at(i + y).at(j + x).at(0));
             }
         }
     }

@@ -1,9 +1,19 @@
+/*
+ * AUTHOR: Christopher Chenoweth, Katie Boatwright, Luke Smith,
+ *    Preston Witschonke, Shepard Berry
+ * ASSIGNMENT TITLE: Falling Balls
+ * ASSIGNMENT DESCRIPTION:
+ *      Create a version of the game falling balls.
+ * DUE DATE: 12/08/2021
+ * DATE CREATED: 11/03/2021
+ * DATE LAST MODIFIED: 12/08/2021
+ */
 #include "Force.h"
 
 
 Force::Force() {
     magnitude = 0;
-    direction = - PI / 2;
+    direction = -PI / 2;
 }
 
 Force::Force(double m, double d) {
@@ -42,45 +52,44 @@ void Force::redirect(int dir) {
 }
 
 void Force::normalize() {
-    while(abs(direction) > PI){
+    while (abs(direction) > PI) {
         direction -= (2 * PI) * abs(direction) / direction;
     }
-    if(magnitude > maxMag){
+    if (magnitude > maxMag) {
         magnitude = maxMag;
     }
 }
 
-void Force::collide(Force &f2, double slope, double differenceY, double differenceX) {
+void Force::collide(Force &f2, double slope, double differenceY,
+                    double differenceX) {
 
-    if(abs(direction - f2.direction) > PI/3){
+    if (abs(direction - f2.direction) > PI / 3) {
         direction = ((PI - (direction - atan(slope)) + atan(slope)) - PI);
         f2.direction = ((PI - (f2.direction - atan(slope)) + atan(slope)) - PI);
-    }
-    else{
+    } else {
         double forces[] = {direction, f2.direction};
 
-        if(differenceY < 0){
+        if (differenceY < 0) {
             swap(forces[0], forces[1]);
         }
-        if(direction > 0 && f2.direction > 0){
+        if (direction > 0 && f2.direction > 0) {
             forces[0] = (PI - (forces[0] - atan(slope))) + atan(slope);
             forces[1] = ((PI - (forces[1] - atan(slope)) + atan(slope)) - PI);
-        }
-        else if(direction < 0 && f2.direction < 0){
+        } else if (direction < 0 && f2.direction < 0) {
             forces[1] = (PI - (forces[1] - atan(slope))) + atan(slope);
             forces[0] = ((PI - (forces[0] - atan(slope)) + atan(slope)) - PI);
-        }
-        else{
-            if(forces[0] > 0){
+        } else {
+            if (forces[0] > 0) {
                 forces[0] = (PI - (forces[0] - atan(slope))) + atan(slope);
-                forces[1] = ((PI - (forces[1] - atan(slope)) + atan(slope)) - PI);
-            }
-            else{
+                forces[1] = ((PI - (forces[1] - atan(slope)) + atan(slope)) -
+                             PI);
+            } else {
                 forces[1] = (PI - (forces[1] - atan(slope))) + atan(slope);
-                forces[0] = ((PI - (forces[0] - atan(slope)) + atan(slope)) - PI);
+                forces[0] = ((PI - (forces[0] - atan(slope)) + atan(slope)) -
+                             PI);
             }
         }
-        if(differenceY < 0){
+        if (differenceY < 0) {
             swap(forces[0], forces[1]);
         }
         direction = forces[0];

@@ -1,3 +1,13 @@
+/*
+ * AUTHOR: Christopher Chenoweth, Katie Boatwright, Luke Smith,
+ *    Preston Witschonke, Shepard Berry
+ * ASSIGNMENT TITLE: Falling Balls
+ * ASSIGNMENT DESCRIPTION:
+ *      Create a version of the game falling balls.
+ * DUE DATE: 12/08/2021
+ * DATE CREATED: 11/03/2021
+ * DATE LAST MODIFIED: 12/08/2021
+ */
 #include "Coordinate.h"
 #include <cmath>
 
@@ -31,10 +41,6 @@ bool Coordinate::operator<(const Coordinate &rhs) const {
 
 bool Coordinate::operator>(const Coordinate &rhs) const {
     return rhs < *this;
-}
-
-bool Coordinate::operator<=(const Coordinate &rhs) const {
-    return !(rhs < *this);
 }
 
 bool Coordinate::operator>=(const Coordinate &rhs) const {
