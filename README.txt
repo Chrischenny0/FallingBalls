@@ -24,3 +24,5 @@ INSTALLATION
 
  * For both SDL2 and SDL2mixer you should install and link as normal libraries from their development
     source code downloads on their respective sites.
+ 
+ * Sounds, fonts, and images folders should be placed in the root directory of the program
